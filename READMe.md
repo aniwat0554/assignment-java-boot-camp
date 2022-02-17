@@ -15,7 +15,7 @@
     graph LR
     Catalog[\"Show 5 whiskies"\] --> Detail[\"Show Teacher's detail"\]
     Detail --> BasketPut[\"Put item in user's basket"\]
-    BasketPut --> Basket[\Show basket item\] --> Payment[\"NA"\]--> Shipping[\"Save default address to order"\]
+    BasketPut --> Basket[\Show basket item\] --> Payment[\"Create order"\]--> Shipping[\"Save default address to order"\]
     Shipping --> PaymentMethodSelect[\"Accept corresponding payment method require info"\]
     PaymentMethodSelect --> Confirm["Save and show order summary"]
 ```
@@ -23,13 +23,16 @@
 ### Entities for the IOs
 ```mermaid
     graph LR
-    Catalog[\"Show 5 whiskies"\] --> Whiskies((Whiskies))
-    Detail[\"Show Teacher's detail"\] --> Whisky(("Whisky"))
-    BasketPut[\"Put item in user's basket"\] --> Basket(("Basket"))
-    BasketShow[\Show basket item\] --> Basket((Basket)) 
-    Shipping[\"Save default address to order"\] --> Order(("Order"))
-    PaymentMethodSelect[\"Accept corresponding payment method require info"\]  --> Order(("Order"))
-    Confirm["Save and show order summary"] --> Order(("Order"))
+    Catalog[\"Show 5 whiskies"\] --> |GET| Whiskies((Whiskies))
+    Detail[\"Show Teacher's detail"\] -->|GET| Whisky(("Whisky"))
+    BasketPut[\"Put item in user's basket"\] -->|POST| Basket(("Basket"))
+    BasketShow[\Show basket item\] -->|GET| Basket((Basket)) 
+    Payment[\"Create order"\] --> |POST| Order(("Order"))
+    Shipping[\"Save default address to order"\] -->|GET| User(("User"))
+    Shipping[\"Save default address to order"\] -->|PUT| Order(("Order"))
+    
+    PaymentMethodSelect[\"Accept corresponding payment method require info"\]  -->|PUT| Order(("Order"))
+    Confirm["Save and show order summary"] -->|POST,GET| Order(("Order"))
 ```
 
 ## Assignments for Java Boot Camp
