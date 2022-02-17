@@ -35,6 +35,17 @@
     Confirm["Save and show order summary"] -->|POST,GET| Order(("Order"))
 ```
 
+### Entities composition
+```mermaid
+    graph LR
+    Whiskies((Whiskies)) -->|ComposedOf| Whisky(("Whisky"))
+    Basket(("Basket")) --> |ComposedOf| Whiskies((Whiskies))
+    Order(("Order")) -->|ComposedOf| Whiskies((Whiskies))
+    Order(("Order")) --> |ComposedOf| ShipmentInfo((ShipmentInfo))
+    Order(("Order")) --> |ComposedOf| PaymentInfo((ShipmentInfo))
+```
+
+
 ## Assignments for Java Boot Camp
 * [Week 1 :: Design and Develop RESTful API with Spring Boot](https://github.com/up1/assignment-java-boot-camp/wiki/Week-01)
 
