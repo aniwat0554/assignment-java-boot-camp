@@ -10,7 +10,7 @@
     Shipping --> PaymentMethodSelect["Select payment method"]
     PaymentMethodSelect --> Confirm["Confirm Order"]
 ```
-### Success case corresponding IO
+### Success case corresponding IOs
 ```mermaid
     graph LR
     Catalog[\"Show 5 whiskies"\] --> Detail[\"Show Teacher's detail"\]
@@ -18,6 +18,18 @@
     BasketPut --> Basket[\Show basket item\] --> Payment[\"NA"\]--> Shipping[\"Save default address to order"\]
     Shipping --> PaymentMethodSelect[\"Accept corresponding payment method require info"\]
     PaymentMethodSelect --> Confirm["Save and show order summary"]
+```
+
+### Entities for the IOs
+```mermaid
+    graph LR
+    Catalog[\"Show 5 whiskies"\] --> Whiskies((Whiskies))
+    Detail[\"Show Teacher's detail"\] --> Whisky(("Whisky"))
+    BasketPut[\"Put item in user's basket"\] --> Basket(("Basket"))
+    BasketShow[\Show basket item\] --> Basket((Basket)) 
+    Shipping[\"Save default address to order"\] --> Order(("Order"))
+    PaymentMethodSelect[\"Accept corresponding payment method require info"\]  --> Order(("Order"))
+    Confirm["Save and show order summary"] --> Order(("Order"))
 ```
 
 ## Assignments for Java Boot Camp
