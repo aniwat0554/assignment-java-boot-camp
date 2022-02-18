@@ -31,7 +31,7 @@
     Shipping[\"Save default address to order"\] -->|GET| User(("User"))
     Shipping[\"Save default address to order"\] -->|PUT| Order(("Order"))
     
-    PaymentMethodSelect[\"Accept corresponding payment method require info"\]  -->|PUT| Order(("Order"))
+    PaymentMethodSelect[\"Accept corresponding payment method required info"\]  -->|PUT| Order(("Order"))
     Confirm["Save and show order summary"] -->|POST,GET| Order(("Order"))
 ```
 
@@ -42,7 +42,7 @@
     Basket(("Basket")) --> |ComposedOf| Whiskies((Whiskies))
     Order(("Order")) -->|ComposedOf| Whiskies((Whiskies))
     Order(("Order")) --> |ComposedOf| ShipmentInfo((ShipmentInfo))
-    Order(("Order")) --> |ComposedOf| PaymentInfo((ShipmentInfo))
+    Order(("Order")) --> |ComposedOf| PaymentInfo((PaymentInfo))
 ```
 
 
