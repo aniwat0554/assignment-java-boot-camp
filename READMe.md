@@ -1,3 +1,10 @@
+This Spring Boot project written in Java is a RESTFul API to serve data and execute business process transaction of a whisky store.
+This API handle only success case as described here
+https://github.com/aniwat0554/assignment-java-boot-camp/wiki/Scenario#user-stories
+
+Which was modeled as below
+From users' perspective down to data modeling
+
 ## Design
 ### Success case process flow
 ```mermaid
