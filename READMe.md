@@ -48,8 +48,8 @@ From users' perspective down to data modeling
     Whiskies((Whiskies)) -->|ComposedOf| Whisky(("Whisky"))
     Basket(("Basket")) --> |ComposedOf| Whiskies((Whiskies))
     Order(("Order")) -->|ComposedOf| Whiskies((Whiskies))
-    Order(("Order")) --> |ComposedOf| ShipmentInfo((ShipmentInfo))
-    Order(("Order")) --> |ComposedOf| PaymentInfo((PaymentInfo))
+    Order(("Order")) --> |ComposedOf| Shipment((Shipment))
+    Order(("Order")) --> |ComposedOf| Payment((Payment))
 ```
 
 
