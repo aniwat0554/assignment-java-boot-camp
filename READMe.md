@@ -30,7 +30,7 @@ From users' perspective down to data modeling
 ### Entities for the IOs
 ```mermaid
     graph LR
-    Catalog[\"Show 5 whiskies"\] --> |GET| Whiskies((Whiskies))
+    Catalog[\"Show 5 whiskies"\] --> |GET| Whiskies((ListOfWhisky))
     Detail[\"Show Read Label detail"\] -->|GET| Whisky(("Whisky"))
     BasketPut[\"Put item in user's basket"\] -->|POST| Basket(("Basket"))
     BasketShow[\Show basket item\] -->|GET| Basket((Basket)) 
