@@ -5,6 +5,9 @@ import java.util.List;
 public class WhiskiesResponse{
 	private List<Whisky> whiskiesResponse;
 
+	public WhiskiesResponse(){
+
+	}
 	private int total;
 	private int page;
 

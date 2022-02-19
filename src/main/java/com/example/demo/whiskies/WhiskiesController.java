@@ -35,7 +35,7 @@ public class WhiskiesController {
         blackLabel.setReview("www.google.com");
         blackLabel.setTasteProfile("sweet");
 
-        Price greenPrice = new Price(600,"THB",0);
+        Price greenPrice = new Price(600,"THB",10);
         Whisky greenLabel = new Whisky("GreenLabel",greenPrice);
         greenLabel.setDegree(40);
         greenLabel.setDescription("Great blend");
