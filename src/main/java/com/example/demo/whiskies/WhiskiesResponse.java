@@ -1,33 +1,34 @@
 package com.example.demo.whiskies;
 
-public class WhiskiesResponse {
-    private String name;
-    private int degree;
+import java.util.List;
 
-    public String getName() {
-        return name;
-    }
+public class WhiskiesResponse{
+	private List<Whisky> whiskiesResponse;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	private int total;
+	private int page;
 
-    public int getDegree() {
-        return degree;
-    }
+	public int getTotal() {
+		return total;
+	}
 
-    public void setDegree(int degree) {
-        this.degree = degree;
-    }
+	public void setTotal(int total) {
+		this.total = total;
+	}
 
-    private final int USUAL_DEGREE = 40;
-    public WhiskiesResponse(String name){
-        this.name = name;
-        this.degree = USUAL_DEGREE;
-    }
+	public int getPage() {
+		return page;
+	}
 
-    public WhiskiesResponse(String name,int degree){
-        this.name = name;
-        this.degree = degree;
-    }
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+	public void setWhiskiesResponse(List<Whisky> whiskiesResponse){
+		this.whiskiesResponse = whiskiesResponse;
+	}
+
+	public List<Whisky> getWhiskiesResponse(){
+		return whiskiesResponse;
+	}
 }
