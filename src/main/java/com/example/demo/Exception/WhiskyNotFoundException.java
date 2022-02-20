@@ -1,4 +1,4 @@
-package com.example.demo.whiskies.Exception;
+package com.example.demo.Exception;
 
 public class WhiskyNotFoundException extends RuntimeException {
     public WhiskyNotFoundException(String name) {

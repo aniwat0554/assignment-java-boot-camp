@@ -1,17 +1,18 @@
 package com.example.demo.users;
 
 import com.example.demo.users.objects.UserResponse;
-import com.example.demo.whiskies.objects.WhiskiesResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class UsersControllerTest {
+class UsersControllerFailingTest {
 
     @Autowired
     private TestRestTemplate testRestTemplate;
@@ -19,9 +20,8 @@ class UsersControllerTest {
     @Test
     @DisplayName("Get user : get user by name expect 1 user with matching name")
     void getUser() {
-        UserResponse response = testRestTemplate.getForObject("/users/Aniwat",UserResponse.class);
-        assertEquals("21000",response.getUser().getAddress().getPostcode());
-        assertEquals("Aniwat",response.getUser().getUsername());
+        ResponseEntity<UserResponse> response = testRestTemplate.getForEntity("/users/aniwatsss",UserResponse.class);
+        assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
 
     }
 

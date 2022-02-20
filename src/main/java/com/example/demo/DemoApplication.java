@@ -1,6 +1,10 @@
 package com.example.demo;
 
 import com.example.demo.pricing.Price;
+import com.example.demo.shipment.Address;
+import com.example.demo.users.UserRepository;
+import com.example.demo.users.objects.User;
+import com.example.demo.users.objects.UserResponse;
 import com.example.demo.whiskies.objects.Whisky;
 import com.example.demo.whiskies.WhiskyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +18,9 @@ public class DemoApplication {
 
 	@Autowired
 	private WhiskyRepository whiskyRepository;
+
+	@Autowired
+	private UserRepository userRepository;
 
 	@PostConstruct
 	public void initWhiskiesData(){
@@ -57,6 +64,10 @@ public class DemoApplication {
 		whiskyRepository.save(greenLabel);
 		whiskyRepository.save(blueLabel);
 		whiskyRepository.save(goldLabel);
+
+		Address address = new Address("Rayong","Noenphra","Rayong City","21000","xxx");
+		User user = new User(address,"Aniwat");
+		userRepository.save(user);
 	}
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
