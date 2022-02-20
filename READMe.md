@@ -9,7 +9,7 @@ From users' perspective down to data modeling
 ### Success case process flow
 ```mermaid
     graph LR
-    Search("Search for whisky") --> Choose["Choose Teacher's"]
+    Search("Search for Johny Walker") --> Choose["Choose Red Label"]
     Choose -->  Select[Put in basket]
     Select --> Basket[Click see basket] 
     Basket --> Payment["Click pay"]
@@ -20,7 +20,7 @@ From users' perspective down to data modeling
 ### Success case corresponding IOs
 ```mermaid
     graph LR
-    Catalog[\"Show 5 whiskies"\] --> Detail[\"Show Teacher's detail"\]
+    Catalog[\"Show 5 whiskies"\] --> Detail[\"Show Red Label detail"\]
     Detail --> BasketPut[\"Put item in user's basket"\]
     BasketPut --> Basket[\Show basket item\] --> Payment[\"Create order"\]--> Shipping[\"Save default address to order"\]
     Shipping --> PaymentMethodSelect[\"Accept corresponding payment method require info"\]
@@ -30,8 +30,8 @@ From users' perspective down to data modeling
 ### Entities for the IOs
 ```mermaid
     graph LR
-    Catalog[\"Show 5 whiskies"\] --> |GET| Whiskies((Whiskies))
-    Detail[\"Show Teacher's detail"\] -->|GET| Whisky(("Whisky"))
+    Catalog[\"Show 5 whiskies"\] --> |GET| Whiskies((ListOfWhisky))
+    Detail[\"Show Read Label detail"\] -->|GET| Whisky(("Whisky"))
     BasketPut[\"Put item in user's basket"\] -->|POST| Basket(("Basket"))
     BasketShow[\Show basket item\] -->|GET| Basket((Basket)) 
     Payment[\"Create order"\] --> |POST| Order(("Order"))
@@ -45,11 +45,11 @@ From users' perspective down to data modeling
 ### Entities composition
 ```mermaid
     graph LR
-    Whiskies((Whiskies)) -->|ComposedOf| Whisky(("Whisky"))
-    Basket(("Basket")) --> |ComposedOf| Whiskies((Whiskies))
-    Order(("Order")) -->|ComposedOf| Whiskies((Whiskies))
-    Order(("Order")) --> |ComposedOf| ShipmentInfo((ShipmentInfo))
-    Order(("Order")) --> |ComposedOf| PaymentInfo((PaymentInfo))
+    Whiskies((ListOfWhisky)) -->|ComposedOf| Whisky(("Whisky"))
+    Basket(("Basket")) --> |ComposedOf| Whiskies((ListOfWhisky))
+    Order(("Order")) -->|ComposedOf| Whiskies((ListOfWhisky))
+    Order(("Order")) --> |ComposedOf| Shipment((Shipment))
+    Order(("Order")) --> |ComposedOf| Payment((Payment))
 ```
 
 
