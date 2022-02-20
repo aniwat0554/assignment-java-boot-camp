@@ -65,4 +65,11 @@ class WhiskiesControllerTest {
         WhiskiesResponse response = testRestTemplate.getForObject("/whiskies?name=Johny Walker",WhiskiesResponse.class);
         assertEquals(false,response.getWhiskiesResponse().stream().filter(whisky -> "GoldLabel Johny Walker".equals(whisky.getName())).findAny().isEmpty());
     }
+
+    @Test
+    @DisplayName("Get Red Label Johny Walker detail and check its content")
+    void testGetWhiskyDetail() {
+        WhiskyDetailResponse response = testRestTemplate.getForObject("/whiskies/RedLabel Johny Walker",WhiskyDetailResponse.class);
+        assertEquals("RedLabel Johny Walker",response.getWhiskyDetail().getName());
+    }
 }

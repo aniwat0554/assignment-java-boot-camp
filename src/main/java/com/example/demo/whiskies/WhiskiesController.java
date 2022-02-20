@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class WhiskiesController {
@@ -18,7 +19,7 @@ public class WhiskiesController {
     private WhiskiesService whiskiesService;
 
     @GetMapping("/whiskies")
-    public WhiskiesResponse getWhisky(@RequestParam String name){
+    public WhiskiesResponse searchWhisky(@RequestParam String name){
 
         List<Whisky> whiskyList = this.whiskiesService.searchWhiskies(name,5);
         WhiskiesResponse whiskiesResponse = new WhiskiesResponse();
@@ -30,5 +31,18 @@ public class WhiskiesController {
         whiskiesResponse.setWhiskiesResponse(whiskyList);
 
         return whiskiesResponse;
+    }
+
+    @GetMapping("/whiskies/{name}")
+    public WhiskyDetailResponse getWhisky(@PathVariable String name){
+
+        Whisky whisky = this.whiskiesService.getWhisky(name);
+        WhiskyDetailResponse whiskyDetailResponse = new WhiskyDetailResponse(whisky);
+
+
+
+
+
+        return whiskyDetailResponse;
     }
 }
