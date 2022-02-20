@@ -18,7 +18,7 @@ class UsersControllerFailingTest {
     private TestRestTemplate testRestTemplate;
 
     @Test
-    @DisplayName("Get user : get user by name expect 1 user with matching name")
+    @DisplayName("Get user : get user by a wrong name expect error")
     void getUser() {
         ResponseEntity<UserResponse> response = testRestTemplate.getForEntity("/users/aniwatsss",UserResponse.class);
         assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());

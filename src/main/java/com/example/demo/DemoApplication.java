@@ -1,5 +1,8 @@
 package com.example.demo;
 
+import com.example.demo.ordering.Basket;
+import com.example.demo.ordering.UsersBasket;
+import com.example.demo.ordering.UsersBasketRepository;
 import com.example.demo.pricing.Price;
 import com.example.demo.shipment.Address;
 import com.example.demo.users.UserRepository;
@@ -12,6 +15,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 
 @SpringBootApplication
 public class DemoApplication {
@@ -21,6 +25,9 @@ public class DemoApplication {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private UsersBasketRepository usersBasketRepository;
 
 	@PostConstruct
 	public void initWhiskiesData(){
@@ -67,7 +74,14 @@ public class DemoApplication {
 
 		Address address = new Address("Rayong","Noenphra","Rayong City","21000","xxx");
 		User user = new User(address,"Aniwat");
-		userRepository.save(user);
+		ArrayList<Whisky> whiskyList = new ArrayList<Whisky>();
+		whiskyList.add(redLabel);
+		Basket basket = new Basket(whiskyList);
+		User savedUser = userRepository.save(user);
+		UsersBasket usersBasket = new UsersBasket(savedUser,basket);
+		usersBasketRepository.save(usersBasket);
+
+
 	}
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);

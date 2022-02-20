@@ -1,5 +1,6 @@
 package com.example.demo.users;
 
+import com.example.demo.users.objects.UserListResponse;
 import com.example.demo.users.objects.UserResponse;
 import com.example.demo.whiskies.objects.WhiskiesResponse;
 import org.junit.jupiter.api.DisplayName;
@@ -23,6 +24,13 @@ class UsersControllerTest {
         assertEquals("21000",response.getUser().getAddress().getPostcode());
         assertEquals("Aniwat",response.getUser().getUsername());
 
+    }
+
+    @Test
+    @DisplayName("Get all users : to make sure that data was initialized correctly in H2")
+    void getAllUsers(){
+        UserListResponse response = testRestTemplate.getForObject("/users",UserListResponse.class);
+        assertEquals(1,response.getUserList().size());
     }
 
 
