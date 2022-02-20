@@ -52,6 +52,16 @@ From users' perspective down to data modeling
     Order(("Order")) --> |ComposedOf| Payment((Payment))
 ```
 
+### Architecture
+All components will follow this architecture
+```mermaid
+    graph LR
+    Client[Client] -->|RESTFul| Controller[Controller]
+    Controller --> Service[Service]
+    Service -->Repo[Repository]
+    Service -->Gateway[Gateway]
+```
+
 
 ## Assignments for Java Boot Camp
 * [Week 1 :: Design and Develop RESTful API with Spring Boot](https://github.com/up1/assignment-java-boot-camp/wiki/Week-01)
