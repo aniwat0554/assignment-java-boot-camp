@@ -1,7 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.pricing.Price;
-import com.example.demo.whiskies.Whisky;
+import com.example.demo.whiskies.objects.Whisky;
 import com.example.demo.whiskies.WhiskyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;

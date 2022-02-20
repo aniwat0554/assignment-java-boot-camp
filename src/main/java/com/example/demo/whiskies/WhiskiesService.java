@@ -1,11 +1,10 @@
 package com.example.demo.whiskies;
 
-import com.example.demo.pricing.Price;
 import com.example.demo.whiskies.Exception.WhiskyNotFoundException;
+import com.example.demo.whiskies.objects.Whisky;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

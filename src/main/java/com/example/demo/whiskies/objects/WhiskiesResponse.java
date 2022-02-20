@@ -1,4 +1,4 @@
-package com.example.demo.whiskies;
+package com.example.demo.whiskies.objects;
 
 import java.util.List;
 

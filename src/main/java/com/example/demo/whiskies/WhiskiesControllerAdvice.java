@@ -1,6 +1,7 @@
 package com.example.demo.whiskies;
 
 import com.example.demo.whiskies.Exception.WhiskyNotFoundException;
+import com.example.demo.whiskies.objects.WhiskyDetailResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;

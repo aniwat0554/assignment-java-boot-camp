@@ -1,5 +1,8 @@
 package com.example.demo.whiskies;
 
+import com.example.demo.whiskies.objects.WhiskiesResponse;
+import com.example.demo.whiskies.objects.Whisky;
+import com.example.demo.whiskies.objects.WhiskyDetailResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
