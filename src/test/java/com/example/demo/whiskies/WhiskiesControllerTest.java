@@ -27,42 +27,42 @@ class WhiskiesControllerTest {
     @DisplayName("Searching : Search for Johny Walker and check if red label is there")
     void checkRedLabel() {
         WhiskiesResponse response = testRestTemplate.getForObject("/whiskies?name=Johny Walker",WhiskiesResponse.class);
-        assertEquals(false,response.getWhiskiesResponse().stream().filter(whisky -> "RedLabel".equals(whisky.getName())).findAny().isEmpty());
+        assertEquals(false,response.getWhiskiesResponse().stream().filter(whisky -> "RedLabel Johny Walker".equals(whisky.getName())).findAny().isEmpty());
     }
 
     @Test
     @DisplayName("Searching : Search for Johny Walker and check if green label is there")
     void checkGreenLabel() {
         WhiskiesResponse response = testRestTemplate.getForObject("/whiskies?name=Johny Walker",WhiskiesResponse.class);
-        assertEquals(false,response.getWhiskiesResponse().stream().filter(whisky -> "GreenLabel".equals(whisky.getName())).findAny().isEmpty());
+        assertEquals(false,response.getWhiskiesResponse().stream().filter(whisky -> "GreenLabel Johny Walker".equals(whisky.getName())).findAny().isEmpty());
     }
 
     @Test
     @DisplayName("Discounting : Search for Johny Walker and check if green label price is correct")
     void checkGreenLabelDiscount() {
         WhiskiesResponse response = testRestTemplate.getForObject("/whiskies?name=Johny Walker",WhiskiesResponse.class);
-        Whisky greenLabel = response.getWhiskiesResponse().stream().filter(whisky -> "GreenLabel".equals(whisky.getName())).findAny().get();
-        assertEquals(590,greenLabel.getPrice().getNetPrice());
+        Whisky greenLabel = response.getWhiskiesResponse().stream().filter(whisky -> "GreenLabel Johny Walker".equals(whisky.getName())).findAny().get();
+        assertEquals(790,greenLabel.getPrice().getNetPrice());
     }
 
     @Test
     @DisplayName("Search for Johny Walker and check if blue label is there")
     void checkBlueLabel() {
         WhiskiesResponse response = testRestTemplate.getForObject("/whiskies?name=Johny Walker",WhiskiesResponse.class);
-        assertEquals(false,response.getWhiskiesResponse().stream().filter(whisky -> "BlueLabel".equals(whisky.getName())).findAny().isEmpty());
+        assertEquals(false,response.getWhiskiesResponse().stream().filter(whisky -> "BlueLabel Johny Walker".equals(whisky.getName())).findAny().isEmpty());
     }
 
     @Test
     @DisplayName("Search for Johny Walker and check if black label is there")
     void checkBlackLabel() {
         WhiskiesResponse response = testRestTemplate.getForObject("/whiskies?name=Johny Walker",WhiskiesResponse.class);
-        assertEquals(false,response.getWhiskiesResponse().stream().filter(whisky -> "BlackLabel".equals(whisky.getName())).findAny().isEmpty());
+        assertEquals(false,response.getWhiskiesResponse().stream().filter(whisky -> "BlackLabel Johny Walker".equals(whisky.getName())).findAny().isEmpty());
     }
 
     @Test
     @DisplayName("Search for Johny Walker and check if gold label is there")
     void checkGoldLabel() {
         WhiskiesResponse response = testRestTemplate.getForObject("/whiskies?name=Johny Walker",WhiskiesResponse.class);
-        assertEquals(false,response.getWhiskiesResponse().stream().filter(whisky -> "GoldLabel".equals(whisky.getName())).findAny().isEmpty());
+        assertEquals(false,response.getWhiskiesResponse().stream().filter(whisky -> "GoldLabel Johny Walker".equals(whisky.getName())).findAny().isEmpty());
     }
 }

@@ -1,13 +1,24 @@
 package com.example.demo.pricing;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+@Entity
 public class Price{
 	private int basePrice;
 	private String unit;
 	private int discount;
 	private int netPrice;
+	@Id
+	@GeneratedValue
+	private int id;
 
+	public Price() {
+	}
 
-	public Price(int basePrice,String unit, int discount) {
+	public Price(int basePrice, String unit, int discount) {
 		this.unit = unit;
 		this.discount = discount;
 		this.basePrice = basePrice;

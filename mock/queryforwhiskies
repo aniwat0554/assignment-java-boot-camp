@@ -1,0 +1,3 @@
+SELECT *
+from Whiskies
+where name like '%text%'

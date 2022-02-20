@@ -2,13 +2,22 @@ package com.example.demo.whiskies;
 
 import com.example.demo.pricing.Price;
 
+import javax.persistence.*;
+import java.util.Optional;
+
+@Entity
 public class Whisky {
+	@Id
+	@GeneratedValue
+	private int id;
+	@OneToOne(optional = false,cascade= CascadeType.ALL)
 	private Price price;
 	private String review;
 	private String tasteProfile;
 	private String name;
 	private int degree;
 	private String description;
+
 
 	public Whisky() {
 	}
