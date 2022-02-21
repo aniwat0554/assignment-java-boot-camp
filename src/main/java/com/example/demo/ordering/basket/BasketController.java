@@ -1,5 +1,8 @@
-package com.example.demo.ordering;
+package com.example.demo.ordering.basket;
 
+import com.example.demo.ordering.objects.Basket;
+import com.example.demo.ordering.objects.BasketPutResponse;
+import com.example.demo.ordering.objects.BasketResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +20,9 @@ public class BasketController {
     }
 
     @PostMapping("/{name}/whisky")
-    public BasketPutResponse putInBasket(@PathVariable String name,@RequestBody int whiskyId){
+    public BasketPutResponse putInBasket(@PathVariable String name, @RequestBody int whiskyId){
         this.basketService.putInBasket(name,whiskyId);
         return new BasketPutResponse();
     }
+
 }

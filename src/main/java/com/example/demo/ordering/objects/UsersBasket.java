@@ -1,4 +1,4 @@
-package com.example.demo.ordering;
+package com.example.demo.ordering.objects;
 
 import com.example.demo.users.objects.User;
 

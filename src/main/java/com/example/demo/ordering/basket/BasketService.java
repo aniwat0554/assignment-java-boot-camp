@@ -1,5 +1,6 @@
-package com.example.demo.ordering;
+package com.example.demo.ordering.basket;
 
+import com.example.demo.ordering.objects.UsersBasket;
 import com.example.demo.whiskies.WhiskyRepository;
 import com.example.demo.whiskies.objects.Whisky;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.example.demo.ordering;
+package com.example.demo.ordering.objects;
 
 public class BasketPutResponse {
     private String errorMessage;

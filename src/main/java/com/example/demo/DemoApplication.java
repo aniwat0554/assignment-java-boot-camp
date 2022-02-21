@@ -1,13 +1,12 @@
 package com.example.demo;
 
-import com.example.demo.ordering.Basket;
-import com.example.demo.ordering.UsersBasket;
-import com.example.demo.ordering.UsersBasketRepository;
+import com.example.demo.ordering.objects.Basket;
+import com.example.demo.ordering.objects.UsersBasket;
+import com.example.demo.ordering.basket.UsersBasketRepository;
 import com.example.demo.pricing.Price;
 import com.example.demo.shipment.Address;
 import com.example.demo.users.UserRepository;
 import com.example.demo.users.objects.User;
-import com.example.demo.users.objects.UserResponse;
 import com.example.demo.whiskies.objects.Whisky;
 import com.example.demo.whiskies.WhiskyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
