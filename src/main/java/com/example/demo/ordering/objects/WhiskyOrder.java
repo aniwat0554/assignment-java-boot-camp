@@ -12,7 +12,7 @@ import java.util.List;
 public class WhiskyOrder {
 
 
-	@OneToOne
+	@OneToOne(optional = true,cascade = CascadeType.ALL)
 	private Address address;
 
 	private String paymentMethod;

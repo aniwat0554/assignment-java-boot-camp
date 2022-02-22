@@ -86,7 +86,15 @@ public class DemoApplication {
 
 		User shopper = usersBasket.getBasketOwner();
 		WhiskyOrder order = new WhiskyOrder();
-		order.setAddress(shopper.getAddress());
+
+		Address updatingAddress = new Address();
+
+		updatingAddress.setHouseNo(shopper.getAddress().getHouseNo());
+		updatingAddress.setPostcode(shopper.getAddress().getPostcode());
+		updatingAddress.setSubdistrict(shopper.getAddress().getSubdistrict());
+		updatingAddress.setProvince(shopper.getAddress().getProvince());
+		updatingAddress.setDistrict(shopper.getAddress().getDistrict());
+		order.setAddress(updatingAddress);
 		order.setWhiskyToPurchasedWhiskyList(basket.getWhiskies());
 		order.setPaymentStatus("unpaid");
 		BankPayment bankPayment = new BankPayment();

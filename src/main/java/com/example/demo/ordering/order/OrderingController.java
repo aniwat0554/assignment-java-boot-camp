@@ -4,6 +4,7 @@ import com.example.demo.ordering.basket.BasketService;
 import com.example.demo.ordering.objects.CheckoutResponse;
 import com.example.demo.ordering.objects.UsersOrder;
 import com.example.demo.ordering.objects.UsersOrderDebug;
+import com.example.demo.shipment.Address;
 import org.aspectj.weaver.ast.Or;
 import org.hibernate.annotations.Check;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,17 @@ public class OrderingController {
         CheckoutResponse checkoutResponse = new CheckoutResponse();
         checkoutResponse.setCreatedOrderId(usersOrderId);
         return checkoutResponse;
+    }
+
+    @PostMapping("/ordering/order/{usersOrderId}/address")
+    public OrderAddressUpdateResponse updateOrderAddress(@PathVariable int usersOrderId,@RequestBody Address address){
+
+        orderService.updateOrderAddress(usersOrderId,address);
+
+
+        OrderAddressUpdateResponse orderAddressUpdateResponse = new OrderAddressUpdateResponse();
+        orderAddressUpdateResponse.setStatusMessage("success");
+        return orderAddressUpdateResponse;
     }
 
 

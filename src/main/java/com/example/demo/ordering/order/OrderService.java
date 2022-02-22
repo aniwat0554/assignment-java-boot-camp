@@ -2,6 +2,7 @@ package com.example.demo.ordering.order;
 
 import com.example.demo.ordering.basket.BasketService;
 import com.example.demo.ordering.objects.*;
+import com.example.demo.shipment.Address;
 import com.example.demo.users.objects.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,7 @@ public class OrderService {
         Basket basket = usersBasket.getBasket();
         User shopper = usersBasket.getBasketOwner();
         WhiskyOrder order = new WhiskyOrder();
-        order.setAddress(shopper.getAddress());
+
         order.setWhiskyToPurchasedWhiskyList(basket.getWhiskies());
         order.setPaymentStatus("unpaid");
         BankPayment bankPayment = new BankPayment();
@@ -45,5 +46,11 @@ public class OrderService {
         UsersOrder usersOrder = new UsersOrder(order,shopper);
         UsersOrder createdOrder = orderRepository.save(usersOrder);
         return createdOrder.getId();
+    }
+
+    public void updateOrderAddress(int usersOrderId, Address address){
+        UsersOrder usersOrder = this.getUsersOrder(usersOrderId);
+        usersOrder.getWhiskyOrder().setAddress(address);
+        this.orderRepository.save(usersOrder);
     }
 }
