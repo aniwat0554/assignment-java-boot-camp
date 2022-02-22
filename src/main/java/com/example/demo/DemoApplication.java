@@ -68,7 +68,7 @@ public class DemoApplication {
 		blueLabel.setReview("www.google.com");
 		blueLabel.setTasteProfile("sweet");
 
-		whiskyRepository.save(redLabel);
+		Whisky savedRedLabel = whiskyRepository.save(redLabel);
 		whiskyRepository.save(blackLabel);
 		whiskyRepository.save(greenLabel);
 		whiskyRepository.save(blueLabel);
@@ -77,10 +77,10 @@ public class DemoApplication {
 		Address address = new Address("Rayong","Noenphra","Rayong City","21000","xxx");
 		User user = new User(address,"Aniwat");
 		ArrayList<Whisky> whiskyList = new ArrayList<Whisky>();
-		whiskyList.add(redLabel);
-		Basket basket = new Basket(whiskyList);
+
 		User savedUser = userRepository.save(user);
-		UsersBasket usersBasket = new UsersBasket(savedUser,basket);
+		UsersBasket usersBasket = new UsersBasket();
+		usersBasket.setBasketOwner(savedUser);
 		usersBasketRepository.save(usersBasket);
 
 

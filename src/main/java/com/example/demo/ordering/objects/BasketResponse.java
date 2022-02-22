@@ -1,20 +1,24 @@
 package com.example.demo.ordering.objects;
 
-public class BasketResponse {
-    private Basket basket;
+import com.example.demo.whiskies.objects.Whisky;
 
-    public BasketResponse(Basket basket) {
-        this.basket = basket;
-    }
+import java.util.List;
+
+public class BasketResponse {
+    private List<Whisky> whiskyList;
 
     public BasketResponse() {
     }
 
-    public Basket getBasket() {
-        return basket;
+    public List<Whisky> getWhiskyList() {
+        return whiskyList;
     }
 
-    public void setBasket(Basket basket) {
-        this.basket = basket;
+    public void setWhiskyList(List<Whisky> whiskyList) {
+        this.whiskyList = whiskyList;
+    }
+
+    public BasketResponse(List<Whisky> whiskyList) {
+        this.whiskyList = whiskyList;
     }
 }

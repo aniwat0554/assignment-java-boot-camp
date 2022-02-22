@@ -1,8 +1,10 @@
 package com.example.demo.ordering.objects;
 
 import com.example.demo.users.objects.User;
+import com.example.demo.whiskies.objects.Whisky;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class UsersBasket {
@@ -13,9 +15,9 @@ public class UsersBasket {
     public UsersBasket() {
     }
 
-    public UsersBasket( User basketOwner, Basket basket) {
+    public UsersBasket( User basketOwner, List<Whisky> whiskyInBasket) {
         this.basketOwner = basketOwner;
-        this.basket = basket;
+        this.whiskyInBasket = whiskyInBasket;
     }
 
     public int getId() {
@@ -34,17 +36,17 @@ public class UsersBasket {
         this.basketOwner = basketOwner;
     }
 
-    public Basket getBasket() {
-        return basket;
-    }
-
-    public void setBasket(Basket basket) {
-        this.basket = basket;
-    }
-
     @OneToOne
     private User basketOwner;
 
-    @OneToOne(optional = false,cascade= CascadeType.ALL)
-    private Basket basket;
+    public List<Whisky> getWhiskyInBasket() {
+        return whiskyInBasket;
+    }
+
+    public void setWhiskyInBasket(List<Whisky> whiskyInBasket) {
+        this.whiskyInBasket = whiskyInBasket;
+    }
+
+    @ManyToMany
+    private List<Whisky> whiskyInBasket;
 }
