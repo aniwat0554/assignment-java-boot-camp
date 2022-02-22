@@ -1,7 +1,11 @@
 package com.example.demo;
 
-import com.example.demo.ordering.objects.UsersBasket;
 import com.example.demo.ordering.basket.UsersBasketRepository;
+import com.example.demo.ordering.objects.BankPayment;
+import com.example.demo.ordering.objects.UsersBasket;
+import com.example.demo.ordering.objects.UsersOrder;
+import com.example.demo.ordering.objects.WhiskyOrder;
+import com.example.demo.ordering.order.OrderRepository;
 import com.example.demo.pricing.Price;
 import com.example.demo.shipment.Address;
 import com.example.demo.users.UserRepository;
@@ -26,6 +30,9 @@ public class DemoApplication {
 
 	@Autowired
 	private UsersBasketRepository usersBasketRepository;
+
+	@Autowired
+	private OrderRepository orderRepository;
 
 	@PostConstruct
 	public void initWhiskiesData(){
@@ -79,6 +86,26 @@ public class DemoApplication {
 		usersBasket.setBasketOwner(savedUser);
 		usersBasketRepository.save(usersBasket);
 
+
+		User shopper = usersBasket.getBasketOwner();
+		WhiskyOrder order = new WhiskyOrder();
+
+		Address updatingAddress = new Address();
+
+		updatingAddress.setHouseNo(shopper.getAddress().getHouseNo());
+		updatingAddress.setPostcode(shopper.getAddress().getPostcode());
+		updatingAddress.setSubdistrict(shopper.getAddress().getSubdistrict());
+		updatingAddress.setProvince(shopper.getAddress().getProvince());
+		updatingAddress.setDistrict(shopper.getAddress().getDistrict());
+		order.setAddress(updatingAddress);
+		order.setWhiskyToPurchasedWhiskyList(whiskyList);
+		order.setPaymentStatus("unpaid");
+		BankPayment bankPayment = new BankPayment();
+		bankPayment.setRefNo2("11234");
+		bankPayment.setRefNo1("2134");
+		order.setBankPayment(bankPayment);
+		UsersOrder usersOrder = new UsersOrder(order,shopper);
+		UsersOrder createdOrder = orderRepository.save(usersOrder);
 
 	}
 	public static void main(String[] args) {

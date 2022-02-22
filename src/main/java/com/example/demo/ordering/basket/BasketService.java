@@ -26,4 +26,11 @@ public class BasketService {
         usersBasket.getWhiskyInBasket().add(whisky);
         this.usersBasketRepository.save(usersBasket);
     }
+
+    public void clearBasket(String name){
+        UsersBasket usersBasket = this.getUsersBasket(name);
+
+        usersBasket.getWhiskyInBasket().clear();
+        this.usersBasketRepository.save(usersBasket);
+    }
 }

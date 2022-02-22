@@ -1,0 +1,22 @@
+BankPayment return this
+{
+    "ref1":"123",
+    "ref2":"1234"
+}
+
+CreditCardPayment
+accept
+{
+    "cardHolder":"Aniwat",
+    "cardId":"1234",
+    "ExpiryDate":"31012021",
+    "CVV":"999"
+}
+return 302 redirect to payment gateway
+
+accept and record
+{
+    "transactionId":"235",
+    "transactionDate":"31012021",
+    "paymentGateway":"OMISE"
+}

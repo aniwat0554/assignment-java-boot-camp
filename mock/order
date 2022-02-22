@@ -1,0 +1,23 @@
+Order
+
+{
+    "address":{},
+    "whiskyList" :[],
+    "paymentMethod":"debitCard",
+    "paymentStatus":"unpaid"
+    "creditCardPayment":{
+        "transactionId":"234",
+        "paymentGateway":"Omise",
+        "amount":12345.0
+    },
+    "bankPayment":{
+        "refNo1":"1234",
+        "refNo2":"1234"
+    },
+}
+
+UsersOrder
+{
+    shopper:{},
+    order:{}
+}
