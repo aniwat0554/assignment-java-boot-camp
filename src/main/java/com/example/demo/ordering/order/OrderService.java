@@ -61,4 +61,11 @@ public class OrderService {
         usersOrder.getWhiskyOrder().setAddress(address);
         this.orderRepository.save(usersOrder);
     }
+
+    public void updatePaymentInfo(int usersOrderId, BankPayment bankPayment) {
+        UsersOrder usersOrder = this.getUsersOrder(usersOrderId);
+        usersOrder.getWhiskyOrder().setBankPayment(bankPayment);
+        usersOrder.getWhiskyOrder().setPaymentMethod(PaymentMethod.BANK);
+        this.orderRepository.save(usersOrder);
+    }
 }

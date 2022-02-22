@@ -43,10 +43,29 @@ class OrderControllerTest {
         CheckoutResponse checkOutResponse = testRestTemplate.postForObject("/ordering/checkout","Aniwat", CheckoutResponse.class);
 
         UserResponse userResponse = testRestTemplate.getForObject("/users/Aniwat",UserResponse.class);
-        OrderAddressUpdateResponse orderAddressResponse = testRestTemplate.postForObject("/ordering/order/"+checkOutResponse.getCreatedOrderId()+"/address",userResponse.getUser().getAddress(),OrderAddressUpdateResponse.class);
+        testRestTemplate.put("/ordering/order/"+checkOutResponse.getCreatedOrderId()+"/address",userResponse.getUser().getAddress(),OrderAddressUpdateResponse.class);
 
         UsersOrder responseItem = testRestTemplate.getForObject("/ordering/order/"+checkOutResponse.getCreatedOrderId(), UsersOrder.class);
         assertEquals("21000",responseItem.getWhiskyOrder().getAddress().getPostcode());
+    }
+
+    @Test
+    @Order(3)
+    @DisplayName("Make bank payment and expect reference numbers")
+    void setBankPayment(){
+
+        BasketPutResponse putItemResponse = testRestTemplate.postForObject("/ordering/basket/Aniwat/whisky", 3, BasketPutResponse.class);
+
+        CheckoutResponse checkOutResponse = testRestTemplate.postForObject("/ordering/checkout","Aniwat", CheckoutResponse.class);
+
+        UserResponse userResponse = testRestTemplate.getForObject("/users/Aniwat",UserResponse.class);
+
+
+        BankPayment bankPaymentResponse = testRestTemplate.postForObject("/ordering/order/"+checkOutResponse.getCreatedOrderId()+"/pay_by_bank",null, BankPayment.class);
+
+
+        UsersOrder responseItem = testRestTemplate.getForObject("/ordering/order/"+checkOutResponse.getCreatedOrderId(), UsersOrder.class);
+        assertEquals("1234",responseItem.getWhiskyOrder().getBankPayment().getRefNo1());
     }
 
 

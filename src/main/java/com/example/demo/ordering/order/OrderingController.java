@@ -1,16 +1,14 @@
 package com.example.demo.ordering.order;
 
+import com.example.demo.messaging.OperationResult;
 import com.example.demo.ordering.basket.BasketService;
+import com.example.demo.ordering.objects.BankPayment;
 import com.example.demo.ordering.objects.CheckoutResponse;
 import com.example.demo.ordering.objects.UsersOrder;
-import com.example.demo.ordering.objects.UsersOrderDebug;
+import com.example.demo.ordering.order.paymentRequestObject.PaymentUpdateRequest;
 import com.example.demo.shipment.Address;
-import org.aspectj.weaver.ast.Or;
-import org.hibernate.annotations.Check;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.persistence.criteria.Order;
 
 @RestController
 public class OrderingController {
@@ -31,7 +29,7 @@ public class OrderingController {
         return checkoutResponse;
     }
 
-    @PostMapping("/ordering/order/{usersOrderId}/address")
+    @PutMapping("/ordering/order/{usersOrderId}/address")
     public OrderAddressUpdateResponse updateOrderAddress(@PathVariable int usersOrderId,@RequestBody Address address){
 
         orderService.updateOrderAddress(usersOrderId,address);
@@ -55,4 +53,18 @@ public class OrderingController {
         orderListResponse.setUsersOrderList(orderService.getAllOrder());
         return orderListResponse;
     }
+
+
+    @PostMapping("/ordering/order/{usersOrderId}/pay_by_bank")
+    public BankPayment payByBankGeneration(@PathVariable int usersOrderId){
+
+        orderService.getUsersOrder(usersOrderId);
+
+        BankPayment bankPayment = new BankPayment();
+        bankPayment.setRefNo1("1234");
+        bankPayment.setRefNo2("1234567");
+        orderService.updatePaymentInfo(usersOrderId,bankPayment);
+        return bankPayment;
+    }
+
 }
