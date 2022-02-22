@@ -1,26 +1,43 @@
-package com.example.demo.ordering.order;
+package com.example.demo.ordering.objects;
 
-import com.example.demo.ordering.objects.Order;
 import com.example.demo.users.objects.User;
 
-public class UsersOrder {
-    private Order order;
+import javax.persistence.*;
 
-    public UsersOrder(Order order, User shopper) {
-        this.order = order;
+@Entity
+public class UsersOrder {
+
+    @Id
+    @GeneratedValue
+    private int id;
+
+    @OneToOne(optional = false,cascade= CascadeType.ALL)
+    private WhiskyOrder whiskyOrder;
+
+    public WhiskyOrder getWhiskyOrder() {
+        return whiskyOrder;
+    }
+
+    public void setWhiskyOrder(WhiskyOrder whiskyOrder) {
+        this.whiskyOrder = whiskyOrder;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public UsersOrder(WhiskyOrder whiskyOrder, User shopper) {
+        this.whiskyOrder = whiskyOrder;
         this.shopper = shopper;
     }
 
     public UsersOrder() {
     }
 
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
 
     public User getShopper() {
         return shopper;
@@ -30,5 +47,6 @@ public class UsersOrder {
         this.shopper = shopper;
     }
 
+    @OneToOne
     private User shopper;
 }

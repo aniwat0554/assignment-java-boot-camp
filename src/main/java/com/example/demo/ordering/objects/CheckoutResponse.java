@@ -1,7 +1,17 @@
-package com.example.demo.ordering.order;
+package com.example.demo.ordering.objects;
 
 public class CheckoutResponse {
     private String statusMessage;
+
+    private int createdOrderId;
+
+    public int getCreatedOrderId() {
+        return createdOrderId;
+    }
+
+    public void setCreatedOrderId(int createdOrderId) {
+        this.createdOrderId = createdOrderId;
+    }
 
     public CheckoutResponse() {
     }

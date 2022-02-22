@@ -1,2 +1,49 @@
-package com.example.demo.ordering.order;public class OrderService {
+package com.example.demo.ordering.order;
+
+import com.example.demo.ordering.basket.BasketService;
+import com.example.demo.ordering.objects.*;
+import com.example.demo.users.objects.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class OrderService {
+    @Autowired
+    private BasketService basketService;
+
+    @Autowired
+    private OrderRepository orderRepository;
+
+    public UsersOrder getUsersOrder(int id){
+        UsersOrder result = orderRepository.findById(id).get();
+        return result;
+    }
+
+    //Created to troubleshoot To Be Removed
+    public UsersOrder getAnyOrder(){
+        return orderRepository.findAll().get(0);
+    }
+
+    public List<UsersOrder> getAllOrder(){
+        return orderRepository.findAll();
+    }
+
+    public int createNewOrder(String shopperName){
+        UsersBasket usersBasket = this.basketService.getUsersBasket(shopperName);
+        Basket basket = usersBasket.getBasket();
+        User shopper = usersBasket.getBasketOwner();
+        WhiskyOrder order = new WhiskyOrder();
+        order.setAddress(shopper.getAddress());
+        order.setWhiskyToPurchasedWhiskyList(basket.getWhiskies());
+        order.setPaymentStatus("unpaid");
+        BankPayment bankPayment = new BankPayment();
+        bankPayment.setRefNo2("11234");
+        bankPayment.setRefNo1("2134");
+        order.setBankPayment(bankPayment);
+        UsersOrder usersOrder = new UsersOrder(order,shopper);
+        UsersOrder createdOrder = orderRepository.save(usersOrder);
+        return createdOrder.getId();
+    }
 }

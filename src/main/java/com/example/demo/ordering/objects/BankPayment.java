@@ -1,8 +1,18 @@
 package com.example.demo.ordering.objects;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class BankPayment{
 	private String refNo2;
 	private String refNo1;
+	@Id
+	@GeneratedValue
+	private int id;
+	public BankPayment() {
+	}
 
 	public void setRefNo2(String refNo2){
 		this.refNo2 = refNo2;

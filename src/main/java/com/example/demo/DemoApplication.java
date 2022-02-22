@@ -1,8 +1,8 @@
 package com.example.demo;
 
-import com.example.demo.ordering.objects.Basket;
-import com.example.demo.ordering.objects.UsersBasket;
+import com.example.demo.ordering.objects.*;
 import com.example.demo.ordering.basket.UsersBasketRepository;
+import com.example.demo.ordering.order.OrderRepository;
 import com.example.demo.pricing.Price;
 import com.example.demo.shipment.Address;
 import com.example.demo.users.UserRepository;
@@ -27,6 +27,9 @@ public class DemoApplication {
 
 	@Autowired
 	private UsersBasketRepository usersBasketRepository;
+
+	@Autowired
+	private OrderRepository orderRepository;
 
 	@PostConstruct
 	public void initWhiskiesData(){
@@ -80,6 +83,18 @@ public class DemoApplication {
 		UsersBasket usersBasket = new UsersBasket(savedUser,basket);
 		usersBasketRepository.save(usersBasket);
 
+
+		User shopper = usersBasket.getBasketOwner();
+		WhiskyOrder order = new WhiskyOrder();
+		order.setAddress(shopper.getAddress());
+		order.setWhiskyToPurchasedWhiskyList(basket.getWhiskies());
+		order.setPaymentStatus("unpaid");
+		BankPayment bankPayment = new BankPayment();
+		bankPayment.setRefNo2("11234");
+		bankPayment.setRefNo1("2134");
+		order.setBankPayment(bankPayment);
+		UsersOrder usersOrder = new UsersOrder(order,shopper);
+		UsersOrder createdOrder = orderRepository.save(usersOrder);
 
 	}
 	public static void main(String[] args) {

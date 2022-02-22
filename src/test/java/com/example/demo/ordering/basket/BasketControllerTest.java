@@ -22,7 +22,7 @@ class BasketControllerTest {
     @Order(1)
     @DisplayName("Get Aniwat's basket which already contains 1 item")
     void getBasket() {
-        BasketResponse response = testRestTemplate.getForObject("/basket/Aniwat", BasketResponse.class);
+        BasketResponse response = testRestTemplate.getForObject("/ordering/basket/Aniwat", BasketResponse.class);
         assertEquals(1,response.getBasket().getWhiskies().size());
         assertEquals("RedLabel Johny Walker",response.getBasket().getWhiskies().get(0).getName());
     }
@@ -31,8 +31,8 @@ class BasketControllerTest {
     @Order(2)
     @DisplayName("Put whisky into Aniwat's basket which should now contains 2 item")
     void putInBasket() {
-        BasketPutResponse putItemResponse = testRestTemplate.postForObject("/basket/Aniwat/whisky", 3, BasketPutResponse.class);
-        BasketResponse getResponse = testRestTemplate.getForObject("/basket/Aniwat", BasketResponse.class);
+        BasketPutResponse putItemResponse = testRestTemplate.postForObject("/ordering/basket/Aniwat/whisky", 3, BasketPutResponse.class);
+        BasketResponse getResponse = testRestTemplate.getForObject("/ordering/basket/Aniwat", BasketResponse.class);
         assertEquals(2,getResponse.getBasket().getWhiskies().size());
         assertEquals(false,getResponse.getBasket().getWhiskies().stream().filter(whisky -> "RedLabel Johny Walker".equals(whisky.getName())).findAny().isEmpty());
         assertEquals(false,getResponse.getBasket().getWhiskies().stream().filter(whisky -> "BlackLabel Johny Walker".equals(whisky.getName())).findAny().isEmpty());

@@ -1,40 +1,41 @@
 package com.example.demo.ordering.objects;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class CreditCardPayment{
-	private String expiryDate;
-	private String holderName;
-	private String cvv;
-	private String cardNo;
-
-	public void setExpiryDate(String expiryDate){
-		this.expiryDate = expiryDate;
+	private String transactionId;
+	private String paymentGateway;
+	private float amountPaid;
+	@Id
+	@GeneratedValue
+	private int id;
+	public CreditCardPayment() {
 	}
 
-	public String getExpiryDate(){
-		return expiryDate;
+	public String getTransactionId() {
+		return transactionId;
 	}
 
-	public void setHolderName(String holderName){
-		this.holderName = holderName;
+	public void setTransactionId(String transactionId) {
+		this.transactionId = transactionId;
 	}
 
-	public String getHolderName(){
-		return holderName;
+	public String getPaymentGateway() {
+		return paymentGateway;
 	}
 
-	public void setCvv(String cvv){
-		this.cvv = cvv;
+	public void setPaymentGateway(String paymentGateway) {
+		this.paymentGateway = paymentGateway;
 	}
 
-	public String getCvv(){
-		return cvv;
+	public float getAmountPaid() {
+		return amountPaid;
 	}
 
-	public void setCardNo(String cardNo){
-		this.cardNo = cardNo;
-	}
-
-	public String getCardNo(){
-		return cardNo;
+	public void setAmountPaid(float amountPaid) {
+		this.amountPaid = amountPaid;
 	}
 }

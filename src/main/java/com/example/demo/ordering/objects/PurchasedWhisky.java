@@ -1,15 +1,15 @@
-package com.example.demo.whiskies.objects;
+package com.example.demo.ordering.objects;
 
 import com.example.demo.pricing.Price;
 
 import javax.persistence.*;
-import java.util.Optional;
 
 @Entity
-public class Whisky{
+public class PurchasedWhisky{
 	@Id
 	@GeneratedValue
 	private int id;
+
 	@OneToOne(optional = false,cascade= CascadeType.ALL)
 	private Price price;
 	private String review;
@@ -19,15 +19,15 @@ public class Whisky{
 	private String description;
 
 
-	public Whisky() {
+	public PurchasedWhisky() {
 	}
 
-	public Whisky(String name,Price price) {
+	public PurchasedWhisky(String name, Price price) {
 		this.price = price;
 		this.name = name;
 	}
 
-	public Whisky(Price price, String review, String tasteProfile, String name, int degree, String description) {
+	public PurchasedWhisky(Price price, String review, String tasteProfile, String name, int degree, String description) {
 		this.price = price;
 		this.review = review;
 		this.tasteProfile = tasteProfile;
