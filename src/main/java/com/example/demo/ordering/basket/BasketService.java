@@ -23,7 +23,7 @@ public class BasketService {
     public void putInBasket(String name,int id){
         UsersBasket usersBasket = this.getUsersBasket(name);
         Whisky whisky = this.whiskyRepository.getById(id);
-        usersBasket.getBasket().getWhiskies().add(whisky);
+        usersBasket.getWhiskyInBasket().add(whisky);
         this.usersBasketRepository.save(usersBasket);
     }
 }

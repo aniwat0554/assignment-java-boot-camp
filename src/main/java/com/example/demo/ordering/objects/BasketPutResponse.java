@@ -1,13 +1,13 @@
 package com.example.demo.ordering.objects;
 
 public class BasketPutResponse {
-    private String errorMessage;
+    private String statusMessage;
 
-    public String getErrorMessage() {
-        return errorMessage;
+    public String getStatusMessage() {
+        return statusMessage;
     }
 
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
+    public void setStatusMessage(String statusMessage) {
+        this.statusMessage = statusMessage;
     }
 }
