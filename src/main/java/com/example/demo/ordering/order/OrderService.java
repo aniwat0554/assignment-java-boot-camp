@@ -1,5 +1,6 @@
 package com.example.demo.ordering.order;
 
+import com.example.demo.Exception.UserNotFoundException;
 import com.example.demo.ordering.basket.BasketService;
 import com.example.demo.ordering.objects.*;
 import com.example.demo.shipment.Address;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrderService {
@@ -18,8 +20,14 @@ public class OrderService {
     private OrderRepository orderRepository;
 
     public UsersOrder getUsersOrder(int id){
-        UsersOrder result = orderRepository.findById(id).get();
-        return result;
+        Optional<UsersOrder> result = orderRepository.findById(id);
+
+        if (result.isPresent()){
+            return result.get();
+        }
+
+
+        throw new OrderNotFoundException(id);
     }
 
     //Created to troubleshoot To Be Removed
