@@ -30,7 +30,7 @@ public class BasketService {
     public void clearBasket(String name){
         UsersBasket usersBasket = this.getUsersBasket(name);
 
-        usersBasket.getBasket().getWhiskies().clear();
+        usersBasket.getWhiskyInBasket().clear();
         this.usersBasketRepository.save(usersBasket);
     }
 }

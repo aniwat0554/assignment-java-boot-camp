@@ -1,9 +1,6 @@
 package com.example.demo.ordering.order;
 
-import com.example.demo.ordering.objects.BasketResponse;
-import com.example.demo.ordering.objects.CheckoutResponse;
-import com.example.demo.ordering.objects.UsersOrder;
-import com.example.demo.ordering.objects.UsersOrderDebug;
+import com.example.demo.ordering.objects.*;
 import com.example.demo.users.UsersService;
 import com.example.demo.users.objects.UserResponse;
 import org.junit.jupiter.api.*;
@@ -27,11 +24,14 @@ class OrderControllerTest {
     @Order(1)
     @DisplayName("Check out to create order which must contain whiskies list")
     void basketCheckOut() {
+
+        BasketPutResponse putItemResponse = testRestTemplate.postForObject("/ordering/basket/Aniwat/whisky", 3, BasketPutResponse.class);
+
         CheckoutResponse response = testRestTemplate.postForObject("/ordering/checkout","Aniwat", CheckoutResponse.class);
 
         UsersOrder responseItem = testRestTemplate.getForObject("/ordering/order/"+response.getCreatedOrderId(), UsersOrder.class);
         assertEquals(response.getCreatedOrderId(),responseItem.getId());
-        assertEquals("RedLabel Johny Walker",responseItem.getWhiskyOrder().getWhiskyList().get(0).getName());
+        assertEquals("BlackLabel Johny Walker",responseItem.getWhiskyOrder().getWhiskyList().get(0).getName());
 
     }
 

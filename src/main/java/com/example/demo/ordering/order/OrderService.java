@@ -41,11 +41,11 @@ public class OrderService {
 
     public int createNewOrder(String shopperName){
         UsersBasket usersBasket = this.basketService.getUsersBasket(shopperName);
-        Basket basket = usersBasket.getBasket();
+
         User shopper = usersBasket.getBasketOwner();
         WhiskyOrder order = new WhiskyOrder();
 
-        order.setWhiskyToPurchasedWhiskyList(basket.getWhiskies());
+        order.setWhiskyToPurchasedWhiskyList(usersBasket.getWhiskyInBasket());
         order.setPaymentStatus("unpaid");
         BankPayment bankPayment = new BankPayment();
         bankPayment.setRefNo2("11234");

@@ -95,7 +95,7 @@ public class DemoApplication {
 		updatingAddress.setProvince(shopper.getAddress().getProvince());
 		updatingAddress.setDistrict(shopper.getAddress().getDistrict());
 		order.setAddress(updatingAddress);
-		order.setWhiskyToPurchasedWhiskyList(basket.getWhiskies());
+		order.setWhiskyToPurchasedWhiskyList(whiskyList);
 		order.setPaymentStatus("unpaid");
 		BankPayment bankPayment = new BankPayment();
 		bankPayment.setRefNo2("11234");
