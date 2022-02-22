@@ -6,6 +6,22 @@ public class CreditCardPaymentRequest{
 	private String cardId;
 	private String cardHolder;
 
+	public void setExpiryDate(String expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+
+	public void setcVV(String cVV) {
+		this.cVV = cVV;
+	}
+
+	public void setCardId(String cardId) {
+		this.cardId = cardId;
+	}
+
+	public void setCardHolder(String cardHolder) {
+		this.cardHolder = cardHolder;
+	}
+
 	public CreditCardPaymentRequest() {
 	}
 

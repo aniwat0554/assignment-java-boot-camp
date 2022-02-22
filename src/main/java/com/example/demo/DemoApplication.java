@@ -1,7 +1,10 @@
 package com.example.demo;
 
-import com.example.demo.ordering.objects.*;
 import com.example.demo.ordering.basket.UsersBasketRepository;
+import com.example.demo.ordering.objects.BankPayment;
+import com.example.demo.ordering.objects.UsersBasket;
+import com.example.demo.ordering.objects.UsersOrder;
+import com.example.demo.ordering.objects.WhiskyOrder;
 import com.example.demo.ordering.order.OrderRepository;
 import com.example.demo.pricing.Price;
 import com.example.demo.shipment.Address;

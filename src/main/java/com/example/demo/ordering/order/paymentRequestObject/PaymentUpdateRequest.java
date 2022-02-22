@@ -6,7 +6,7 @@ import com.example.demo.ordering.objects.CreditCardPayment;
 public class PaymentUpdateRequest {
     private String paymentType;
     private BankPayment bankPayment;
-    private CreditCardPayment creditCardPayment;
+    private CreditCardPaymentRequest creditCardPaymentRequest;
 
     public String getPaymentType() {
         return paymentType;
@@ -24,12 +24,12 @@ public class PaymentUpdateRequest {
         this.bankPayment = bankPayment;
     }
 
-    public CreditCardPayment getCreditCardPayment() {
-        return creditCardPayment;
+    public CreditCardPaymentRequest getCreditCardPaymentRequest() {
+        return creditCardPaymentRequest;
     }
 
-    public void setCreditCardPayment(CreditCardPayment creditCardPayment) {
-        this.creditCardPayment = creditCardPayment;
+    public void setCreditCardPaymentRequest(CreditCardPaymentRequest creditCardPaymentRequest) {
+        this.creditCardPaymentRequest = creditCardPaymentRequest;
     }
 
     public PaymentUpdateRequest() {

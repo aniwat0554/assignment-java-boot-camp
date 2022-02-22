@@ -1,6 +1,5 @@
 package com.example.demo.ordering.order;
 
-import com.example.demo.Exception.UserNotFoundException;
 import com.example.demo.ordering.basket.BasketService;
 import com.example.demo.ordering.objects.*;
 import com.example.demo.shipment.Address;
@@ -67,5 +66,25 @@ public class OrderService {
         usersOrder.getWhiskyOrder().setBankPayment(bankPayment);
         usersOrder.getWhiskyOrder().setPaymentMethod(PaymentMethod.BANK);
         this.orderRepository.save(usersOrder);
+    }
+
+    public void updatePaymentInfo(int usersOrderId, CreditCardPayment creditCardPayment) {
+        UsersOrder usersOrder = this.getUsersOrder(usersOrderId);
+        usersOrder.getWhiskyOrder().setCreditCardPayment(creditCardPayment);
+        usersOrder.getWhiskyOrder().setPaymentMethod(PaymentMethod.CREDITCARD);
+        this.orderRepository.save(usersOrder);
+    }
+
+    public void updatePaymentInfo(int usersOrderId, String paymentMethod) {
+        UsersOrder usersOrder = this.getUsersOrder(usersOrderId);
+        usersOrder.getWhiskyOrder().setPaymentMethod(paymentMethod);
+        this.orderRepository.save(usersOrder);
+    }
+
+    public void updatePaymentStatus(String transactionId,String status){
+        UsersOrder usersOrder = orderRepository.findByWhiskyOrder_CreditCardPayment_transactionId(transactionId).get();
+        usersOrder.getWhiskyOrder().setPaymentStatus(status);
+        orderRepository.save(usersOrder);
+
     }
 }

@@ -1,7 +1,10 @@
 package com.example.demo.ordering.order;
 
+import com.example.demo.gateway.PaymentGatewayCreditPaymentInfo;
+import com.example.demo.messaging.OperationResult;
 import com.example.demo.ordering.objects.*;
-import com.example.demo.users.UsersService;
+import com.example.demo.ordering.order.paymentRequestObject.CreditCardPaymentRequest;
+import com.example.demo.ordering.order.paymentRequestObject.PaymentUpdateRequest;
 import com.example.demo.users.objects.UserResponse;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +46,7 @@ class OrderControllerTest {
         CheckoutResponse checkOutResponse = testRestTemplate.postForObject("/ordering/checkout","Aniwat", CheckoutResponse.class);
 
         UserResponse userResponse = testRestTemplate.getForObject("/users/Aniwat",UserResponse.class);
-        testRestTemplate.put("/ordering/order/"+checkOutResponse.getCreatedOrderId()+"/address",userResponse.getUser().getAddress(),OrderAddressUpdateResponse.class);
+        testRestTemplate.put("/ordering/order/"+checkOutResponse.getCreatedOrderId()+"/address",userResponse.getUser().getAddress(), OrderAddressUpdateResponse.class);
 
         UsersOrder responseItem = testRestTemplate.getForObject("/ordering/order/"+checkOutResponse.getCreatedOrderId(), UsersOrder.class);
         assertEquals("21000",responseItem.getWhiskyOrder().getAddress().getPostcode());
@@ -66,7 +69,61 @@ class OrderControllerTest {
 
         UsersOrder responseItem = testRestTemplate.getForObject("/ordering/order/"+checkOutResponse.getCreatedOrderId(), UsersOrder.class);
         assertEquals("1234",responseItem.getWhiskyOrder().getBankPayment().getRefNo1());
+        assertEquals(PaymentMethod.BANK,responseItem.getWhiskyOrder().getPaymentMethod());
+
     }
 
+    @Test
+    @Order(4)
+    @DisplayName("Choose delivery payment expect payment method field to reflect")
+    void setOnDeliveryPayment(){
+
+        BasketPutResponse putItemResponse = testRestTemplate.postForObject("/ordering/basket/Aniwat/whisky", 3, BasketPutResponse.class);
+
+        CheckoutResponse checkOutResponse = testRestTemplate.postForObject("/ordering/checkout","Aniwat", CheckoutResponse.class);
+
+        UserResponse userResponse = testRestTemplate.getForObject("/users/Aniwat",UserResponse.class);
+
+
+        BankPayment bankPaymentResponse = testRestTemplate.postForObject("/ordering/order/"+checkOutResponse.getCreatedOrderId()+"/pay_on_delivery",null, BankPayment.class);
+
+
+        UsersOrder responseItem = testRestTemplate.getForObject("/ordering/order/"+checkOutResponse.getCreatedOrderId(), UsersOrder.class);
+        assertEquals(PaymentMethod.ONDELIVERY,responseItem.getWhiskyOrder().getPaymentMethod());
+
+    }
+
+    @Test
+    @Order(3)
+    @DisplayName("Make credit payment and expect transaction id and url from gateway")
+    void setCreditPayment(){
+
+        BasketPutResponse putItemResponse = testRestTemplate.postForObject("/ordering/basket/Aniwat/whisky", 3, BasketPutResponse.class);
+
+        CheckoutResponse checkOutResponse = testRestTemplate.postForObject("/ordering/checkout","Aniwat", CheckoutResponse.class);
+
+        UserResponse userResponse = testRestTemplate.getForObject("/users/Aniwat",UserResponse.class);
+
+
+        PaymentUpdateRequest paymentUpdateRequest = new PaymentUpdateRequest();
+        paymentUpdateRequest.setPaymentType(PaymentMethod.CREDITCARD);
+        CreditCardPaymentRequest creditCardPaymentRequest = new CreditCardPaymentRequest();
+        creditCardPaymentRequest.setCardId("1234");
+        creditCardPaymentRequest.setcVV("1234");
+        creditCardPaymentRequest.setExpiryDate("20210101");
+        creditCardPaymentRequest.setCardId("1234");
+        paymentUpdateRequest.setCreditCardPaymentRequest(creditCardPaymentRequest);
+        PaymentGatewayCreditPaymentInfo paymentGatewayCreditPaymentInfo = testRestTemplate.postForObject("/ordering/order/"+checkOutResponse.getCreatedOrderId()+"/pay_by_credit_card",paymentUpdateRequest, PaymentGatewayCreditPaymentInfo.class);
+
+        testRestTemplate.put("/payment/1234","Paid");
+        UsersOrder responseItem = testRestTemplate.getForObject("/ordering/order/"+checkOutResponse.getCreatedOrderId(), UsersOrder.class);
+        assertEquals("OMISE",responseItem.getWhiskyOrder().getCreditCardPayment().getPaymentGateway());
+        assertEquals("1234",responseItem.getWhiskyOrder().getCreditCardPayment().getTransactionId());
+        assertEquals("Paid",responseItem.getWhiskyOrder().getPaymentStatus());
+
+
+        assertEquals(PaymentMethod.CREDITCARD,responseItem.getWhiskyOrder().getPaymentMethod());
+
+    }
 
 }

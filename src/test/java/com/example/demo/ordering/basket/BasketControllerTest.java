@@ -2,7 +2,6 @@ package com.example.demo.ordering.basket;
 
 import com.example.demo.ordering.objects.BasketPutResponse;
 import com.example.demo.ordering.objects.BasketResponse;
-import com.example.demo.users.objects.UserResponse;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

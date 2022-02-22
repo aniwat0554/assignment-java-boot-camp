@@ -1,7 +1,5 @@
 package com.example.demo.ordering.order;
 
-import com.example.demo.Exception.UserNotFoundException;
-import com.example.demo.users.objects.UserResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
