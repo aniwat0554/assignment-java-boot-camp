@@ -23,8 +23,14 @@ From users' perspective down to data modeling
     Catalog[\"Show 5 whiskies"\] --> Detail[\"Show Red Label detail"\]
     Detail --> BasketPut[\"Put item in user's basket"\]
     BasketPut --> Basket[\Show basket item\] --> Payment[\"Create order"\]--> Shipping[\"Save default address to order"\]
-    Shipping --> PaymentMethodSelect[\"Accept corresponding payment method require info"\]
-    PaymentMethodSelect --> Confirm["Save and show order summary"]
+    Shipping --> BankMethodSelect[\"Bank payment selected : generate and response Reference1 , Reference2"\]
+    Shipping --> CCMethodSelect[\"Credit Card selected : accept credit card info"\] --> CCRedirect[\"Redirect to OTP"\] --> CCAccept[\"Record Transaction Info"\]
+    Shipping --> PayOnDeli[\"Pay on delivery selected : record the option"\]
+    BankMethodSelect --> Confirm["Save and show order summary"]
+    
+    CCAccept --> Confirm["Save and show order summary"]
+    
+    PayOnDeli --> Confirm["Save and show order summary"]
 ```
 
 ### Entities for the IOs
