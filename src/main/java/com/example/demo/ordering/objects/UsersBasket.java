@@ -4,13 +4,18 @@ import com.example.demo.users.objects.User;
 import com.example.demo.whiskies.objects.Whisky;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 public class UsersBasket {
     @Id
     @GeneratedValue
     private int id;
+
+    @Transient
+    private int totalPrice;
 
     public UsersBasket() {
     }
@@ -49,4 +54,13 @@ public class UsersBasket {
 
     @ManyToMany
     private List<Whisky> whiskyInBasket;
+
+    public int getTotalPrice(){
+        Optional<Integer> totalPrice = this.whiskyInBasket.stream().map((whisky) -> whisky.getPrice().getNetPrice()).reduce((total, num) -> total+num);
+        if(totalPrice.isPresent()){
+            return totalPrice.get();
+        }
+
+        return 0;
+    }
 }

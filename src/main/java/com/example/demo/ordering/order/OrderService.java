@@ -51,6 +51,7 @@ public class OrderService {
         bankPayment.setRefNo1("2134");
         order.setBankPayment(bankPayment);
         UsersOrder usersOrder = new UsersOrder(order,shopper);
+        usersOrder.getWhiskyOrder().setTotalPrice(usersBasket.getTotalPrice());
         UsersOrder createdOrder = orderRepository.save(usersOrder);
         return createdOrder.getId();
     }

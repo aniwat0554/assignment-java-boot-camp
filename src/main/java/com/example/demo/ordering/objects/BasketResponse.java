@@ -7,6 +7,16 @@ import java.util.List;
 public class BasketResponse {
     private List<Whisky> whiskyList;
 
+    private int totalPrice;
+
+    public int getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
     public BasketResponse() {
     }
 

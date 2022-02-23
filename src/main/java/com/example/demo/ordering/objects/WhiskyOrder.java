@@ -15,6 +15,15 @@ public class WhiskyOrder {
 	@OneToOne(optional = true,cascade = CascadeType.ALL)
 	private Address address;
 
+	public int getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(int totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	private int totalPrice;
 	private String paymentMethod;
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<PurchasedWhisky> whiskyList;

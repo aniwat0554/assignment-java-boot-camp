@@ -10,6 +10,7 @@ public class UsersOrder {
     @Id
     @GeneratedValue
     private int id;
+    
 
     @OneToOne(optional = false,cascade= CascadeType.ALL)
     private WhiskyOrder whiskyOrder;

@@ -10,8 +10,6 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class PaymentGateway {
 
-    @Value("${server.port}")
-    private int serverPort;
 
     public PaymentGatewayCreditPaymentInfo makePayment(CreditCardPaymentRequest paymentUpdateRequest){
         //RestTemplate restTemplate = new RestTemplate();

@@ -62,7 +62,7 @@ public class IntegrationTest {
         assertEquals(1,getResponse.getWhiskyList().size());
 
         assertEquals(false,getResponse.getWhiskyList().stream().filter(whisky -> "RedLabel Johny Walker".equals(whisky.getName())).findAny().isEmpty());
-
+        assertEquals(600,getResponse.getTotalPrice());
     }
 
     @Test
@@ -75,7 +75,7 @@ public class IntegrationTest {
         UsersOrder responseItem = testRestTemplate.getForObject("/ordering/order/"+response.getCreatedOrderId(), UsersOrder.class);
         assertEquals(response.getCreatedOrderId(),responseItem.getId());
         assertEquals("RedLabel Johny Walker",responseItem.getWhiskyOrder().getWhiskyList().get(0).getName());
-
+        assertEquals(600,responseItem.getWhiskyOrder().getTotalPrice());
     }
 
     @Test
