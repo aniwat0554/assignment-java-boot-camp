@@ -19,7 +19,7 @@ From users' perspective down to data modeling
 ```
 ### Success case corresponding IOs
 ```mermaid
-    graph LR
+    graph TD
     Catalog[\"Show 5 whiskies"\] --> Detail[\"Show Red Label detail"\]
     Detail --> BasketPut[\"Put item in user's basket"\]
     BasketPut --> Basket[\Show basket item\] --> Payment[\"Create order"\]--> Shipping[\"Save default address to order"\]
