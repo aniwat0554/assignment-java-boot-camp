@@ -51,7 +51,7 @@ public class OrderingController {
         return orderService.getUsersOrder(id);
     }
 
-    //Created for troubleshooting To Be Removed
+    //Turn out this is indeed needed - Not yet tested
     @GetMapping("/ordering/order")
     public OrderListResponse getAnyOrder(){
         OrderListResponse orderListResponse = new OrderListResponse();

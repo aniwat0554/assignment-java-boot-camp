@@ -87,6 +87,8 @@ public class DemoApplication {
 		usersBasketRepository.save(usersBasket);
 
 
+		//Remove later : This block was used to faciltate development and testing
+		/*
 		User shopper = usersBasket.getBasketOwner();
 		WhiskyOrder order = new WhiskyOrder();
 
@@ -106,6 +108,8 @@ public class DemoApplication {
 		order.setBankPayment(bankPayment);
 		UsersOrder usersOrder = new UsersOrder(order,shopper);
 		UsersOrder createdOrder = orderRepository.save(usersOrder);
+
+		 */
 
 	}
 	public static void main(String[] args) {
