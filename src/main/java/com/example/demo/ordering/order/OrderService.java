@@ -7,6 +7,7 @@ import com.example.demo.ordering.objects.*;
 import com.example.demo.ordering.order.paymentRequestObject.PaymentUpdateRequest;
 import com.example.demo.shipment.Address;
 import com.example.demo.users.objects.User;
+import com.example.demo.whiskies.objects.Whisky;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,10 +25,13 @@ public class OrderService {
     @Autowired
     private PaymentGateway paymentGateway;
 
+    public OrderService(OrderRepository orderRepository){
+        this.orderRepository = orderRepository;
+    }
     public UsersOrder getUsersOrder(int id,String shopperName){
         Optional<UsersOrder> result = orderRepository.findById(id);
 
-        if(result.get().getShopper().getUsername() == shopperName){
+        if(result.get().getShopper().getUsername() != shopperName){
             throw new OrderNotFoundException(id);
         }
         if (result.isPresent()){
@@ -51,18 +55,18 @@ public class OrderService {
         UsersBasket usersBasket = this.basketService.getUsersBasket(shopperName);
 
         User shopper = usersBasket.getBasketOwner();
-        WhiskyOrder order = new WhiskyOrder();
-
-        order.setWhiskyToPurchasedWhiskyList(usersBasket.getWhiskyInBasket());
-        order.setPaymentStatus("unpaid");
-        BankPayment bankPayment = new BankPayment();
-        bankPayment.setRefNo2("11234");
-        bankPayment.setRefNo1("2134");
-        order.setBankPayment(bankPayment);
+        WhiskyOrder order = prepareOrder(usersBasket.getWhiskyInBasket());
         UsersOrder usersOrder = new UsersOrder(order,shopper);
         usersOrder.getWhiskyOrder().setTotalPrice(usersBasket.getTotalPrice());
         UsersOrder createdOrder = orderRepository.save(usersOrder);
         return createdOrder;
+    }
+    private WhiskyOrder prepareOrder(List<Whisky> whiskyList){
+        WhiskyOrder order = new WhiskyOrder();
+
+        order.setWhiskyToPurchasedWhiskyList(whiskyList);
+        order.setPaymentStatus("unpaid");
+        return order;
     }
 
     public void updateOrderAddress(int usersOrderId, Address address,String shopperName){
