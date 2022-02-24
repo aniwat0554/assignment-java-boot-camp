@@ -1,7 +1,6 @@
 package com.example.demo.ordering.order;
 
 import com.example.demo.gateway.PaymentGatewayCreditPaymentInfo;
-import com.example.demo.messaging.OperationResult;
 import com.example.demo.ordering.objects.*;
 import com.example.demo.ordering.order.paymentRequestObject.CreditCardPaymentRequest;
 import com.example.demo.ordering.order.paymentRequestObject.PaymentUpdateRequest;
@@ -10,13 +9,24 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
+import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.util.ResourceUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureWireMock(port = 65535)
 class OrderControllerTest {
 
     @Autowired
@@ -95,10 +105,23 @@ class OrderControllerTest {
 
     }
 
+    public static String read(String filePath) throws IOException{
+        File file = ResourceUtils.getFile(filePath);
+        return new String(Files.readAllBytes(file.toPath()));
+    }
     @Test
     @Order(3)
     @DisplayName("Make credit payment and expect transaction id and url from gateway")
-    void setCreditPayment(){
+    void makeCreditPayment() throws IOException{
+
+        //Mock payment API
+        stubFor(
+                post(urlPathEqualTo("/payment_gateway/payment_request"))
+                        .willReturn(aResponse()
+                                .withBody(read("classpath:paymentResponse.json"))
+                                .withHeader(CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                                .withStatus(200))
+                        );
 
         BasketPutResponse putItemResponse = testRestTemplate.postForObject("/ordering/basket/Aniwat/whisky", 3, BasketPutResponse.class);
 

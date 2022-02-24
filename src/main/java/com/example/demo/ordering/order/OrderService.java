@@ -1,7 +1,10 @@
 package com.example.demo.ordering.order;
 
+import com.example.demo.gateway.PaymentGateway;
+import com.example.demo.gateway.PaymentGatewayCreditPaymentInfo;
 import com.example.demo.ordering.basket.BasketService;
 import com.example.demo.ordering.objects.*;
+import com.example.demo.ordering.order.paymentRequestObject.PaymentUpdateRequest;
 import com.example.demo.shipment.Address;
 import com.example.demo.users.objects.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,9 @@ public class OrderService {
 
     @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    private PaymentGateway paymentGateway;
 
     public UsersOrder getUsersOrder(int id){
         Optional<UsersOrder> result = orderRepository.findById(id);
@@ -87,5 +93,10 @@ public class OrderService {
         usersOrder.getWhiskyOrder().setPaymentStatus(status);
         orderRepository.save(usersOrder);
 
+    }
+
+    public PaymentGatewayCreditPaymentInfo makePayment(PaymentUpdateRequest paymentUpdateRequest){
+        PaymentGatewayCreditPaymentInfo creditPaymentInfo = paymentGateway.makePayment(paymentUpdateRequest.getCreditCardPaymentRequest());
+        return creditPaymentInfo;
     }
 }

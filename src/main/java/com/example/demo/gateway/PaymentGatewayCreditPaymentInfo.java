@@ -3,6 +3,15 @@ package com.example.demo.gateway;
 public class PaymentGatewayCreditPaymentInfo {
     private String transactionId;
     private String otpUrl;
+    private String paymentGatewayName;
+
+    public String getPaymentGatewayName() {
+        return paymentGatewayName;
+    }
+
+    public void setPaymentGatewayName(String paymentGatewayName) {
+        this.paymentGatewayName = paymentGatewayName;
+    }
 
     public PaymentGatewayCreditPaymentInfo() {
     }

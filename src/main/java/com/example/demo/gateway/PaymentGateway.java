@@ -10,13 +10,17 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class PaymentGateway {
 
-
+    private String baseUrl;
+    public PaymentGateway(@Value("${base_url}") String baseUrl){
+        this.baseUrl = baseUrl;
+    }
     public PaymentGatewayCreditPaymentInfo makePayment(CreditCardPaymentRequest paymentUpdateRequest){
-        //RestTemplate restTemplate = new RestTemplate();
-        //PaymentGatewayCreditPaymentInfo creditPaymentInfo = restTemplate.postForObject("http://localhost:"+serverPort+"/payment_gateway/payment_request",paymentUpdateRequest, PaymentGatewayCreditPaymentInfo.class);
-        PaymentGatewayCreditPaymentInfo creditPaymentInfo = new PaymentGatewayCreditPaymentInfo();
-        creditPaymentInfo.setOtpUrl("https://www.google.com");
-        creditPaymentInfo.setTransactionId("1234");
+        RestTemplate restTemplate = new RestTemplate();
+        PaymentGatewayCreditPaymentInfo creditPaymentInfo = restTemplate.postForObject(this.baseUrl+"/payment_gateway/payment_request",paymentUpdateRequest, PaymentGatewayCreditPaymentInfo.class);
+
+        //creditPaymentInfo.setOtpUrl("https://www.google.com");
+        //creditPaymentInfo.setTransactionId("1234");
+        creditPaymentInfo.setPaymentGatewayName("OMISE");
         return creditPaymentInfo;
     }
 }
