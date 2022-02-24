@@ -86,9 +86,9 @@ public class OrderingController {
     @PostMapping("/ordering/order/{usersOrderId}/pay_by_credit_card")
     public PaymentGatewayCreditPaymentInfo payByCreditCard(@PathVariable int usersOrderId, @RequestBody PaymentUpdateRequest paymentUpdateRequest){
         UsersOrder usersOrder = orderService.getUsersOrder(usersOrderId);
-        PaymentGatewayCreditPaymentInfo creditPaymentInfo = paymentGateway.makePayment(paymentUpdateRequest.getCreditCardPaymentRequest());
+        PaymentGatewayCreditPaymentInfo creditPaymentInfo = orderService.makePayment(paymentUpdateRequest);
         CreditCardPayment creditCardPayment = new CreditCardPayment();
-        creditCardPayment.setPaymentGateway("OMISE");
+        creditCardPayment.setPaymentGateway(creditCardPayment.getPaymentGateway());
         creditCardPayment.setTransactionId(creditPaymentInfo.getTransactionId());
 
         usersOrder.getWhiskyOrder().setCreditCardPayment(creditCardPayment);
@@ -98,7 +98,7 @@ public class OrderingController {
 
     //Callback for Payment Gateway to call to update payment status
     @PutMapping("/payment/{transactionId}")
-    public OperationResult payByCreditCard(@PathVariable String transactionId,@RequestBody String status){
+    public OperationResult updatePaymentStatus(@PathVariable String transactionId,@RequestBody String status){
         orderService.updatePaymentStatus(transactionId,status);
         return new OperationResult();
     }
