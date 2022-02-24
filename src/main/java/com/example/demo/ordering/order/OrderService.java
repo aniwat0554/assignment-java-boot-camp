@@ -24,9 +24,12 @@ public class OrderService {
     @Autowired
     private PaymentGateway paymentGateway;
 
-    public UsersOrder getUsersOrder(int id){
+    public UsersOrder getUsersOrder(int id,String shopperName){
         Optional<UsersOrder> result = orderRepository.findById(id);
 
+        if(result.get().getShopper().getUsername() == shopperName){
+            throw new OrderNotFoundException(id);
+        }
         if (result.isPresent()){
             return result.get();
         }
@@ -44,7 +47,7 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
-    public int createNewOrder(String shopperName){
+    public UsersOrder createNewOrder(String shopperName){
         UsersBasket usersBasket = this.basketService.getUsersBasket(shopperName);
 
         User shopper = usersBasket.getBasketOwner();
@@ -59,31 +62,31 @@ public class OrderService {
         UsersOrder usersOrder = new UsersOrder(order,shopper);
         usersOrder.getWhiskyOrder().setTotalPrice(usersBasket.getTotalPrice());
         UsersOrder createdOrder = orderRepository.save(usersOrder);
-        return createdOrder.getId();
+        return createdOrder;
     }
 
-    public void updateOrderAddress(int usersOrderId, Address address){
-        UsersOrder usersOrder = this.getUsersOrder(usersOrderId);
+    public void updateOrderAddress(int usersOrderId, Address address,String shopperName){
+        UsersOrder usersOrder = this.getUsersOrder(usersOrderId,shopperName);
         usersOrder.getWhiskyOrder().setAddress(address);
         this.orderRepository.save(usersOrder);
     }
 
-    public void updatePaymentInfo(int usersOrderId, BankPayment bankPayment) {
-        UsersOrder usersOrder = this.getUsersOrder(usersOrderId);
+    public void updatePaymentInfo(int usersOrderId, BankPayment bankPayment,String shopperName) {
+        UsersOrder usersOrder = this.getUsersOrder(usersOrderId,shopperName);
         usersOrder.getWhiskyOrder().setBankPayment(bankPayment);
         usersOrder.getWhiskyOrder().setPaymentMethod(PaymentMethod.BANK);
         this.orderRepository.save(usersOrder);
     }
 
-    public void updatePaymentInfo(int usersOrderId, CreditCardPayment creditCardPayment) {
-        UsersOrder usersOrder = this.getUsersOrder(usersOrderId);
+    public void updatePaymentInfo(int usersOrderId, CreditCardPayment creditCardPayment,String shopperName) {
+        UsersOrder usersOrder = this.getUsersOrder(usersOrderId,shopperName);
         usersOrder.getWhiskyOrder().setCreditCardPayment(creditCardPayment);
         usersOrder.getWhiskyOrder().setPaymentMethod(PaymentMethod.CREDITCARD);
         this.orderRepository.save(usersOrder);
     }
 
-    public void updatePaymentInfo(int usersOrderId, String paymentMethod) {
-        UsersOrder usersOrder = this.getUsersOrder(usersOrderId);
+    public void updatePaymentInfo(int usersOrderId, String paymentMethod,String shopperName) {
+        UsersOrder usersOrder = this.getUsersOrder(usersOrderId,shopperName);
         usersOrder.getWhiskyOrder().setPaymentMethod(paymentMethod);
         this.orderRepository.save(usersOrder);
     }

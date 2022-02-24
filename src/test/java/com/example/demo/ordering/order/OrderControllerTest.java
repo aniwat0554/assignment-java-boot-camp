@@ -44,7 +44,7 @@ class OrderControllerTest {
 
         CheckoutResponse response = testRestTemplate.postForObject("/ordering/checkout","Aniwat", CheckoutResponse.class);
 
-        UsersOrder responseItem = testRestTemplate.getForObject("/ordering/order/"+response.getCreatedOrderId(), UsersOrder.class);
+        UsersOrder responseItem = testRestTemplate.getForObject("/ordering/order/Aniwat/"+response.getCreatedOrderId(), UsersOrder.class);
         assertEquals(response.getCreatedOrderId(),responseItem.getId());
         assertEquals("BlackLabel Johny Walker",responseItem.getWhiskyOrder().getWhiskyList().get(0).getName());
         assertEquals(700,responseItem.getWhiskyOrder().getTotalPrice());
@@ -58,9 +58,9 @@ class OrderControllerTest {
         CheckoutResponse checkOutResponse = testRestTemplate.postForObject("/ordering/checkout","Aniwat", CheckoutResponse.class);
 
         UserResponse userResponse = testRestTemplate.getForObject("/users/Aniwat",UserResponse.class);
-        testRestTemplate.put("/ordering/order/"+checkOutResponse.getCreatedOrderId()+"/address",userResponse.getUser().getAddress(), OrderAddressUpdateResponse.class);
+        testRestTemplate.put("/ordering/order/Aniwat/"+checkOutResponse.getCreatedOrderId()+"/address",userResponse.getUser().getAddress(), OrderAddressUpdateResponse.class);
 
-        UsersOrder responseItem = testRestTemplate.getForObject("/ordering/order/"+checkOutResponse.getCreatedOrderId(), UsersOrder.class);
+        UsersOrder responseItem = testRestTemplate.getForObject("/ordering/order/Aniwat/"+checkOutResponse.getCreatedOrderId(), UsersOrder.class);
         assertEquals("21000",responseItem.getWhiskyOrder().getAddress().getPostcode());
     }
 
@@ -76,10 +76,10 @@ class OrderControllerTest {
         UserResponse userResponse = testRestTemplate.getForObject("/users/Aniwat",UserResponse.class);
 
 
-        BankPayment bankPaymentResponse = testRestTemplate.postForObject("/ordering/order/"+checkOutResponse.getCreatedOrderId()+"/pay_by_bank",null, BankPayment.class);
+        BankPayment bankPaymentResponse = testRestTemplate.postForObject("/ordering/order/Aniwat/"+checkOutResponse.getCreatedOrderId()+"/pay_by_bank",null, BankPayment.class);
 
 
-        UsersOrder responseItem = testRestTemplate.getForObject("/ordering/order/"+checkOutResponse.getCreatedOrderId(), UsersOrder.class);
+        UsersOrder responseItem = testRestTemplate.getForObject("/ordering/order/Aniwat/"+checkOutResponse.getCreatedOrderId(), UsersOrder.class);
         assertEquals("1234",responseItem.getWhiskyOrder().getBankPayment().getRefNo1());
         assertEquals(PaymentMethod.BANK,responseItem.getWhiskyOrder().getPaymentMethod());
 
@@ -97,10 +97,10 @@ class OrderControllerTest {
         UserResponse userResponse = testRestTemplate.getForObject("/users/Aniwat",UserResponse.class);
 
 
-        BankPayment bankPaymentResponse = testRestTemplate.postForObject("/ordering/order/"+checkOutResponse.getCreatedOrderId()+"/pay_on_delivery",null, BankPayment.class);
+        BankPayment bankPaymentResponse = testRestTemplate.postForObject("/ordering/order/Aniwat/"+checkOutResponse.getCreatedOrderId()+"/pay_on_delivery",null, BankPayment.class);
 
 
-        UsersOrder responseItem = testRestTemplate.getForObject("/ordering/order/"+checkOutResponse.getCreatedOrderId(), UsersOrder.class);
+        UsersOrder responseItem = testRestTemplate.getForObject("/ordering/order/Aniwat/"+checkOutResponse.getCreatedOrderId(), UsersOrder.class);
         assertEquals(PaymentMethod.ONDELIVERY,responseItem.getWhiskyOrder().getPaymentMethod());
 
     }
@@ -138,10 +138,10 @@ class OrderControllerTest {
         creditCardPaymentRequest.setExpiryDate("20210101");
         creditCardPaymentRequest.setCardId("1234");
         paymentUpdateRequest.setCreditCardPaymentRequest(creditCardPaymentRequest);
-        PaymentGatewayCreditPaymentInfo paymentGatewayCreditPaymentInfo = testRestTemplate.postForObject("/ordering/order/"+checkOutResponse.getCreatedOrderId()+"/pay_by_credit_card",paymentUpdateRequest, PaymentGatewayCreditPaymentInfo.class);
+        PaymentGatewayCreditPaymentInfo paymentGatewayCreditPaymentInfo = testRestTemplate.postForObject("/ordering/order/Aniwat/"+checkOutResponse.getCreatedOrderId()+"/pay_by_credit_card",paymentUpdateRequest, PaymentGatewayCreditPaymentInfo.class);
 
-        testRestTemplate.put("/payment/1234","Paid");
-        UsersOrder responseItem = testRestTemplate.getForObject("/ordering/order/"+checkOutResponse.getCreatedOrderId(), UsersOrder.class);
+        testRestTemplate.put("/ordering/payment/1234","Paid");
+        UsersOrder responseItem = testRestTemplate.getForObject("/ordering/order/Aniwat/"+checkOutResponse.getCreatedOrderId(), UsersOrder.class);
         assertEquals("OMISE",responseItem.getWhiskyOrder().getCreditCardPayment().getPaymentGateway());
         assertEquals("1234",responseItem.getWhiskyOrder().getCreditCardPayment().getTransactionId());
         assertEquals("Paid",responseItem.getWhiskyOrder().getPaymentStatus());

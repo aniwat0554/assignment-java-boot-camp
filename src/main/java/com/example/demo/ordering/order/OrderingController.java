@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("ordering")
 public class OrderingController {
 
     @Autowired
@@ -23,21 +24,21 @@ public class OrderingController {
 
     @Autowired
     private BasketService basketService;
-    @PostMapping("/ordering/checkout")
+    @PostMapping("/checkout")
     public CheckoutResponse basketCheckOut(@RequestBody String shopperName){
         //Implement Transaction here
-        int usersOrderId = orderService.createNewOrder(shopperName);
+        UsersOrder usersOrder = orderService.createNewOrder(shopperName);
         basketService.clearBasket(shopperName);
 
         CheckoutResponse checkoutResponse = new CheckoutResponse();
-        checkoutResponse.setCreatedOrderId(usersOrderId);
+        checkoutResponse.setCreatedOrderId(usersOrder.getId());
         return checkoutResponse;
     }
 
-    @PutMapping("/ordering/order/{usersOrderId}/address")
-    public OrderAddressUpdateResponse updateOrderAddress(@PathVariable int usersOrderId,@RequestBody Address address){
+    @PutMapping("/order/{name}/{usersOrderId}/address")
+    public OrderAddressUpdateResponse updateOrderAddress(@PathVariable int usersOrderId,@PathVariable String name,@RequestBody Address address){
 
-        orderService.updateOrderAddress(usersOrderId,address);
+        orderService.updateOrderAddress(usersOrderId,address,name);
 
 
         OrderAddressUpdateResponse orderAddressUpdateResponse = new OrderAddressUpdateResponse();
@@ -46,13 +47,13 @@ public class OrderingController {
     }
 
 
-    @GetMapping("/ordering/order/{id}")
-    public UsersOrder getOrder(@PathVariable int id){
-        return orderService.getUsersOrder(id);
+    @GetMapping("/order/{name}/{id}")
+    public UsersOrder getOrder(@PathVariable int id,@PathVariable String name){
+        return orderService.getUsersOrder(id,name);
     }
 
     //Turn out this is indeed needed - Not yet tested
-    @GetMapping("/ordering/order")
+    @GetMapping("/order")
     public OrderListResponse getAnyOrder(){
         OrderListResponse orderListResponse = new OrderListResponse();
         orderListResponse.setUsersOrderList(orderService.getAllOrder());
@@ -60,39 +61,37 @@ public class OrderingController {
     }
 
 
-    @PostMapping("/ordering/order/{usersOrderId}/pay_by_bank")
-    public BankPayment payByBankGeneration(@PathVariable int usersOrderId){
+    @PostMapping("/order/{name}/{usersOrderId}/pay_by_bank")
+    public BankPayment payByBankGeneration(@PathVariable int usersOrderId,@PathVariable String name){
 
-        orderService.getUsersOrder(usersOrderId);
+
 
         BankPayment bankPayment = new BankPayment();
         bankPayment.setRefNo1("1234");
         bankPayment.setRefNo2("1234567");
-        orderService.updatePaymentInfo(usersOrderId,bankPayment);
+        orderService.updatePaymentInfo(usersOrderId,bankPayment,name);
         return bankPayment;
     }
 
-    @PostMapping("/ordering/order/{usersOrderId}/pay_on_delivery")
-    public OperationResult payOnDelivery(@PathVariable int usersOrderId){
+    @PostMapping("/order/{name}/{usersOrderId}/pay_on_delivery")
+    public OperationResult payOnDelivery(@PathVariable int usersOrderId,@PathVariable String name){
 
-        orderService.getUsersOrder(usersOrderId);
 
-        orderService.updatePaymentInfo(usersOrderId,PaymentMethod.ONDELIVERY);
+        orderService.updatePaymentInfo(usersOrderId,PaymentMethod.ONDELIVERY,name);
         OperationResult operationResult = new OperationResult();
 
         return operationResult;
     }
 
-    @PostMapping("/ordering/order/{usersOrderId}/pay_by_credit_card")
-    public CreditCardPayment payByCreditCard(@PathVariable int usersOrderId, @RequestBody PaymentUpdateRequest paymentUpdateRequest){
-        UsersOrder usersOrder = orderService.getUsersOrder(usersOrderId);
+    @PostMapping("/order/{name}/{usersOrderId}/pay_by_credit_card")
+    public CreditCardPayment payByCreditCard(@PathVariable int usersOrderId,@PathVariable String name, @RequestBody PaymentUpdateRequest paymentUpdateRequest){
+
         PaymentGatewayCreditPaymentInfo creditPaymentInfo = orderService.makePayment(paymentUpdateRequest);
         CreditCardPayment creditCardPayment = new CreditCardPayment();
         creditCardPayment.setPaymentGateway(creditPaymentInfo.getPaymentGatewayName());
         creditCardPayment.setTransactionId(creditPaymentInfo.getTransactionId());
 
-        usersOrder.getWhiskyOrder().setCreditCardPayment(creditCardPayment);
-        orderService.updatePaymentInfo(usersOrderId,creditCardPayment);
+        orderService.updatePaymentInfo(usersOrderId,creditCardPayment,name);
         return creditCardPayment;
     }
 
