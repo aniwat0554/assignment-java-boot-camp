@@ -53,10 +53,10 @@ public class OrderingController {
     }
 
     //Turn out this is indeed needed - Not yet tested
-    @GetMapping("/order")
-    public OrderListResponse getAnyOrder(){
+    @GetMapping("/order/{name}")
+    public OrderListResponse getAnyOrder(@PathVariable String name){
         OrderListResponse orderListResponse = new OrderListResponse();
-        orderListResponse.setUsersOrderList(orderService.getAllOrder());
+        orderListResponse.setUsersOrderList(orderService.getAllOrder(name));
         return orderListResponse;
     }
 
