@@ -31,7 +31,7 @@ public class OrderService {
     public UsersOrder getUsersOrder(int id,String shopperName){
         Optional<UsersOrder> result = orderRepository.findById(id);
 
-        if(result.get().getShopper().getUsername() != shopperName){
+        if(!result.get().getShopper().getUsername().equals(shopperName)){
             throw new OrderNotFoundException(id);
         }
         if (result.isPresent()){
@@ -47,8 +47,8 @@ public class OrderService {
         return orderRepository.findAll().get(0);
     }
 
-    public List<UsersOrder> getAllOrder(){
-        return orderRepository.findAll();
+    public List<UsersOrder> getAllOrder(String username){
+        return orderRepository.findByShopper_username(username);
     }
 
     public UsersOrder createNewOrder(String shopperName){
