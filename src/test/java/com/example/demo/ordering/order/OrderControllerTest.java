@@ -140,6 +140,7 @@ class OrderControllerTest {
         paymentUpdateRequest.setCreditCardPaymentRequest(creditCardPaymentRequest);
         PaymentGatewayCreditPaymentInfo paymentGatewayCreditPaymentInfo = testRestTemplate.postForObject("/ordering/order/Aniwat/"+checkOutResponse.getCreatedOrderId()+"/pay_by_credit_card",paymentUpdateRequest, PaymentGatewayCreditPaymentInfo.class);
 
+        //This method call is to simulate callback from Payment Gateway
         testRestTemplate.put("/ordering/payment/1234","Paid");
         UsersOrder responseItem = testRestTemplate.getForObject("/ordering/order/Aniwat/"+checkOutResponse.getCreatedOrderId(), UsersOrder.class);
         assertEquals("OMISE",responseItem.getWhiskyOrder().getCreditCardPayment().getPaymentGateway());

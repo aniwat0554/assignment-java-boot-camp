@@ -18,11 +18,22 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
+import org.springframework.http.MediaType;
+import org.springframework.util.ResourceUtils;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureWireMock(port = 65535)
 public class IntegrationTest {
 
     @Autowired
@@ -72,7 +83,7 @@ public class IntegrationTest {
 
         CheckoutResponse response = testRestTemplate.postForObject("/ordering/checkout","Aniwat", CheckoutResponse.class);
 
-        UsersOrder responseItem = testRestTemplate.getForObject("/ordering/order/"+response.getCreatedOrderId(), UsersOrder.class);
+        UsersOrder responseItem = testRestTemplate.getForObject("/ordering/order/Aniwat/"+response.getCreatedOrderId(), UsersOrder.class);
         assertEquals(response.getCreatedOrderId(),responseItem.getId());
         assertEquals("RedLabel Johny Walker",responseItem.getWhiskyOrder().getWhiskyList().get(0).getName());
         assertEquals(600,responseItem.getWhiskyOrder().getTotalPrice());
@@ -82,12 +93,12 @@ public class IntegrationTest {
     @Order(5)
     @DisplayName("Update address and check if it is indeed updated")
     void updateAddress(){
-        OrderListResponse orderListResponse = testRestTemplate.getForObject("/ordering/order",OrderListResponse.class);
+        OrderListResponse orderListResponse = testRestTemplate.getForObject("/ordering/order/Aniwat",OrderListResponse.class);
 
         UserResponse userResponse = testRestTemplate.getForObject("/users/Aniwat",UserResponse.class);
-        testRestTemplate.put("/ordering/order/"+orderListResponse.getUsersOrderList().get(0).getId()+"/address",userResponse.getUser().getAddress(), OrderAddressUpdateResponse.class);
+        testRestTemplate.put("/ordering/order/Aniwat/"+orderListResponse.getUsersOrderList().get(0).getId()+"/address",userResponse.getUser().getAddress(), OrderAddressUpdateResponse.class);
 
-        UsersOrder responseItem = testRestTemplate.getForObject("/ordering/order/"+orderListResponse.getUsersOrderList().get(0).getId(), UsersOrder.class);
+        UsersOrder responseItem = testRestTemplate.getForObject("/ordering/order/Aniwat/"+orderListResponse.getUsersOrderList().get(0).getId(), UsersOrder.class);
         assertEquals("21000",responseItem.getWhiskyOrder().getAddress().getPostcode());
     }
 
@@ -95,10 +106,18 @@ public class IntegrationTest {
     @Test
     @Order(6)
     @DisplayName("Make credit payment and see order detail")
-    void setCreditPayment(){
+    void setCreditPayment() throws IOException{
 
+        //Mock payment API
+        stubFor(
+                post(urlPathEqualTo("/payment_gateway/payment_request"))
+                        .willReturn(aResponse()
+                                .withBody(read("classpath:paymentResponse.json"))
+                                .withHeader(CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                                .withStatus(200))
+        );
 
-        OrderListResponse orderListResponse = testRestTemplate.getForObject("/ordering/order",OrderListResponse.class);
+        OrderListResponse orderListResponse = testRestTemplate.getForObject("/ordering/order/Aniwat",OrderListResponse.class);
 
         PaymentUpdateRequest paymentUpdateRequest = new PaymentUpdateRequest();
         paymentUpdateRequest.setPaymentType(PaymentMethod.CREDITCARD);
@@ -108,10 +127,11 @@ public class IntegrationTest {
         creditCardPaymentRequest.setExpiryDate("20210101");
         creditCardPaymentRequest.setCardId("1234");
         paymentUpdateRequest.setCreditCardPaymentRequest(creditCardPaymentRequest);
-        PaymentGatewayCreditPaymentInfo paymentGatewayCreditPaymentInfo = testRestTemplate.postForObject("/ordering/order/"+orderListResponse.getUsersOrderList().get(0).getId()+"/pay_by_credit_card",paymentUpdateRequest, PaymentGatewayCreditPaymentInfo.class);
+        PaymentGatewayCreditPaymentInfo paymentGatewayCreditPaymentInfo = testRestTemplate.postForObject("/ordering/order/Aniwat/"+orderListResponse.getUsersOrderList().get(0).getId()+"/pay_by_credit_card",paymentUpdateRequest, PaymentGatewayCreditPaymentInfo.class);
 
-        testRestTemplate.put("/payment/1234","Paid");
-        UsersOrder responseItem = testRestTemplate.getForObject("/ordering/order/"+orderListResponse.getUsersOrderList().get(0).getId(), UsersOrder.class);
+        //This method call is to simulate callback from Payment Gateway
+        testRestTemplate.put("/ordering/payment/1234","Paid");
+        UsersOrder responseItem = testRestTemplate.getForObject("/ordering/order/Aniwat/"+orderListResponse.getUsersOrderList().get(0).getId(), UsersOrder.class);
         assertEquals("OMISE",responseItem.getWhiskyOrder().getCreditCardPayment().getPaymentGateway());
         assertEquals("1234",responseItem.getWhiskyOrder().getCreditCardPayment().getTransactionId());
         assertEquals("Paid",responseItem.getWhiskyOrder().getPaymentStatus());
@@ -119,6 +139,11 @@ public class IntegrationTest {
 
         assertEquals(PaymentMethod.CREDITCARD,responseItem.getWhiskyOrder().getPaymentMethod());
 
+    }
+
+    public static String read(String filePath) throws IOException {
+        File file = ResourceUtils.getFile(filePath);
+        return new String(Files.readAllBytes(file.toPath()));
     }
 
 }
