@@ -20,6 +20,7 @@ public class PaymentGateway {
 
         //creditPaymentInfo.setOtpUrl("https://www.google.com");
         //creditPaymentInfo.setTransactionId("1234");
+        creditPaymentInfo.setPaymentGatewayName("OMISE");
         return creditPaymentInfo;
     }
 }
