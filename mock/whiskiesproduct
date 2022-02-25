@@ -1,15 +1,71 @@
-[
-	{
-        "name":"teacher's",
-		"degree":40,
-		"review":"www.google.com",
-		"description":"this is one good whisky",
-		"Price":{
-		    "basePrice":400,"unit":"THB","discount":0,netPrice:400
-		},
-
-		"tasteProfile":"this is one good whisky great note",
-    }
-]
-
-{"whiskiesResponse":[{"price":{"basePrice":600,"unit":"THB","discount":0,"netPrice":600},"review":"www.google.com","tasteProfile":"sweet","name":"RedLabel","degree":40,"description":"Great blend"},{"price":{"basePrice":600,"unit":"THB","discount":0,"netPrice":600},"review":"www.google.com","tasteProfile":"sweet","name":"BlackLabel","degree":40,"description":"Great blend"},{"price":{"basePrice":600,"unit":"THB","discount":10,"netPrice":590},"review":"www.google.com","tasteProfile":"sweet","name":"GreenLabel","degree":40,"description":"Great blend"},{"price":{"basePrice":600,"unit":"THB","discount":0,"netPrice":600},"review":"www.google.com","tasteProfile":"sweet","name":"BlueLabel","degree":40,"description":"Great blend"},{"price":{"basePrice":600,"unit":"THB","discount":0,"netPrice":600},"review":"www.google.com","tasteProfile":"sweet","name":"GoldLabel","degree":40,"description":"Great blend"}],"total":10,"page":1}
+{
+    "whiskiesResponse": [{
+            "id": 1,
+            "price": {
+                "basePrice": 600,
+                "unit": "THB",
+                "discount": 0,
+                "netPrice": 600
+            },
+            "review": "www.google.com",
+            "tasteProfile": "sweet",
+            "name": "RedLabel Johny Walker",
+            "degree": 40,
+            "description": "Great blend"
+        }, {
+            "id": 3,
+            "price": {
+                "basePrice": 700,
+                "unit": "THB",
+                "discount": 0,
+                "netPrice": 700
+            },
+            "review": "www.google.com",
+            "tasteProfile": "sweet",
+            "name": "BlackLabel Johny Walker",
+            "degree": 40,
+            "description": "Great blend"
+        }, {
+            "id": 5,
+            "price": {
+                "basePrice": 800,
+                "unit": "THB",
+                "discount": 10,
+                "netPrice": 790
+            },
+            "review": "www.google.com",
+            "tasteProfile": "sweet",
+            "name": "GreenLabel Johny Walker",
+            "degree": 40,
+            "description": "Great blend"
+        }, {
+            "id": 7,
+            "price": {
+                "basePrice": 1000,
+                "unit": "THB",
+                "discount": 0,
+                "netPrice": 1000
+            },
+            "review": "www.google.com",
+            "tasteProfile": "sweet",
+            "name": "BlueLabel Johny Walker",
+            "degree": 40,
+            "description": "Great blend"
+        }, {
+            "id": 9,
+            "price": {
+                "basePrice": 900,
+                "unit": "THB",
+                "discount": 0,
+                "netPrice": 900
+            },
+            "review": "www.google.com",
+            "tasteProfile": "sweet",
+            "name": "GoldLabel Johny Walker",
+            "degree": 40,
+            "description": "Great blend"
+        }
+    ],
+    "total": 10,
+    "page": 1
+}
