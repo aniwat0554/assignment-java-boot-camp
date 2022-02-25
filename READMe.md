@@ -51,3 +51,10 @@ Method	Url	Description	Sample Valid Request Body	Sample Valid Response Body
 | ------------- | ------------- | ------------- | ------------- | ------------- | 
 | GET  | /whiskies?name={name}  | Search whiskies by name | - | [JSON](https://github.com/aniwat0554/assignment-java-boot-camp/blob/main/mock/whiskiesproduct) |
 | GET  | /whiskies/{name}  | Get a whisky detail | - | [JSON](https://github.com/aniwat0554/assignment-java-boot-camp/blob/main/mock/whiskyindividualresponse) |
+
+#### Ordering Group
+#### Basket Entity
+| Method  | Url | Description | Sample Valid Request Body | Sample Valid Response Body |
+| ------------- | ------------- | ------------- | ------------- | ------------- | 
+| GET  | /ordering/basket/{name}  | Get basket of name | - | [JSON](https://github.com/aniwat0554/assignment-java-boot-camp/blob/main/mock/basket) |
+| POST  | /ordering/basket/{name}/whisky  | Add whisky into the basket | [JSON - ID of whisky](https://github.com/aniwat0554/assignment-java-boot-camp/blob/main/mock/addtobasketrequest) | [JSON](https://github.com/aniwat0554/assignment-java-boot-camp/blob/main/mock/addwhiskytobasket) |
