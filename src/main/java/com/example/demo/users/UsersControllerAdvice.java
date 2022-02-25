@@ -13,7 +13,7 @@ public class UsersControllerAdvice {
     @ExceptionHandler(UserNotFoundException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public UserResponse whiskyNotFound(UserNotFoundException e){
+    public UserResponse userNotFound(UserNotFoundException e){
         UserResponse errorResponse =  new UserResponse();
         errorResponse.setErrorMessage(e.getMessage());
         return errorResponse;
