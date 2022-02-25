@@ -45,3 +45,9 @@ Method	Url	Description	Sample Valid Request Body	Sample Valid Response Body
 | ------------- | ------------- | ------------- | ------------- | ------------- | 
 | GET  | /users/{name}  | Get user's detail | - | [JSON](https://github.com/aniwat0554/assignment-java-boot-camp/blob/main/mock/usersmock) |
 | GET  | /users  | Get all users info | - | [JSON](https://github.com/aniwat0554/assignment-java-boot-camp/blob/main/mock/allusersmock) |
+
+#### Whiskies Entity
+| Method  | Url | Description | Sample Valid Request Body | Sample Valid Response Body |
+| ------------- | ------------- | ------------- | ------------- | ------------- | 
+| GET  | /whiskies?name={name}  | Search whiskies by name | - | [JSON](https://github.com/aniwat0554/assignment-java-boot-camp/blob/main/mock/whiskiesproduct) |
+| GET  | /whiskies/{name}  | Get a whisky detail | - | [JSON](https://github.com/aniwat0554/assignment-java-boot-camp/blob/main/mock/whiskyindividualresponse) |
