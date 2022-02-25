@@ -35,7 +35,7 @@ This API follow this architecture
     Service -->Repo[Repository]
     Service -->Gateway[Gateway]
 ```
-
+### API Design
 API are designed as shown in table from as below link
 
 https://github.com/aniwat0554/assignment-java-boot-camp/blob/main/APIDesign.md
