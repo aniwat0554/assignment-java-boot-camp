@@ -1,0 +1,41 @@
+{
+    "usersOrderList": [
+        {
+            "id": 14,
+            "whiskyOrder": {
+                "address": null,
+                "totalPrice": 700,
+                "paymentMethod": null,
+                "whiskyList": [
+                    {
+                        "id": 16,
+                        "price": {
+                            "basePrice": 700,
+                            "unit": "THB",
+                            "discount": 0,
+                            "netPrice": 700
+                        },
+                        "review": "www.google.com",
+                        "tasteProfile": "sweet",
+                        "name": "BlackLabel Johny Walker",
+                        "degree": 40,
+                        "description": "Great blend"
+                    }
+                ],
+                "paymentStatus": "unpaid",
+                "creditCardPayment": null,
+                "bankPayment": null
+            },
+            "shopper": {
+                "address": {
+                    "province": "Rayong",
+                    "subdistrict": "Noenphra",
+                    "district": "Rayong City",
+                    "postcode": "21000",
+                    "houseNo": "xxx"
+                },
+                "username": "Aniwat"
+            }
+        }
+    ]
+}

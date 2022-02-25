@@ -1,0 +1,9 @@
+{
+  "paymentType": "CreditCard",
+  "creditCardPaymentRequest": {
+    "expiryDate": "20210101",
+    "cVV": "999",
+    "cardId": "2214",
+    "cardHolder": "Aniwat",
+  }
+}
