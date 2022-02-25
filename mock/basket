@@ -1,3 +1,18 @@
 {
-    whiskies:[whisky]
+    "whiskyList": [{
+            "id": 3,
+            "price": {
+                "basePrice": 700,
+                "unit": "THB",
+                "discount": 0,
+                "netPrice": 700
+            },
+            "review": "www.google.com",
+            "tasteProfile": "sweet",
+            "name": "BlackLabel Johny Walker",
+            "degree": 40,
+            "description": "Great blend"
+        }
+    ],
+    "totalPrice": 700
 }
