@@ -1,0 +1,14 @@
+{
+  "userList": [
+    {
+        "username":"Aniwat",
+        "address":{
+        		"province":"Rayong",
+                "district":"Rayong City",
+                "subdistrict":"Noenphra",
+                "postcode":"21000",
+        		"houseno":"xxx"
+            }
+      }
+  ]
+}
