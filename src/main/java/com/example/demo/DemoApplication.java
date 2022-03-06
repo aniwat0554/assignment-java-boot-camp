@@ -9,6 +9,7 @@ import com.example.demo.ordering.order.OrderRepository;
 import com.example.demo.pricing.Price;
 import com.example.demo.shipment.Address;
 import com.example.demo.users.UserRepository;
+import com.example.demo.users.UsersService;
 import com.example.demo.users.objects.User;
 import com.example.demo.whiskies.objects.Whisky;
 import com.example.demo.whiskies.WhiskyRepository;
@@ -34,6 +35,8 @@ public class DemoApplication {
 	@Autowired
 	private OrderRepository orderRepository;
 
+	@Autowired
+	private UsersService usersService;
 	@PostConstruct
 	public void initWhiskiesData(){
 		Price redPrice = new Price(600,"THB",0);
@@ -78,10 +81,10 @@ public class DemoApplication {
 		whiskyRepository.save(goldLabel);
 
 		Address address = new Address("Rayong","Noenphra","Rayong City","21000","xxx");
-		User user = new User(address,"Aniwat");
+
+		User savedUser = usersService.createUser("Aniwat","1234",address);
 		ArrayList<Whisky> whiskyList = new ArrayList<Whisky>();
 
-		User savedUser = userRepository.save(user);
 		UsersBasket usersBasket = new UsersBasket();
 		usersBasket.setBasketOwner(savedUser);
 		usersBasketRepository.save(usersBasket);
