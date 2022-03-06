@@ -1,10 +1,10 @@
 package com.example.demo.users;
 
-import com.example.demo.shipment.Address;
 import com.example.demo.users.objects.User;
 import com.example.demo.users.objects.UserListResponse;
 import com.example.demo.users.objects.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,8 +19,12 @@ public class UsersController {
     private UsersService usersService;
 
     @GetMapping("/users/{name}")
-    public UserResponse getUser(@PathVariable String name){
-        User user = usersService.getUser(name);
+    public UserResponse getUser(@PathVariable String name, Authentication authentication){
+        User user = new User();
+        if(name.equals(authentication.getName())){
+            user = usersService.getUser(name);
+        }
+
         return new UserResponse(user);
     }
 
