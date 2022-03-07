@@ -10,6 +10,7 @@ import com.example.demo.pricing.Price;
 import com.example.demo.shipment.Address;
 import com.example.demo.users.UserRepository;
 import com.example.demo.users.UsersService;
+import com.example.demo.users.objects.Role;
 import com.example.demo.users.objects.User;
 import com.example.demo.whiskies.objects.Whisky;
 import com.example.demo.whiskies.WhiskyRepository;
@@ -19,6 +20,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 @SpringBootApplication
 public class DemoApplication {
@@ -82,7 +85,12 @@ public class DemoApplication {
 
 		Address address = new Address("Rayong","Noenphra","Rayong City","21000","xxx");
 
-		User savedUser = usersService.createUser("Aniwat","1234",address);
+		Role adminRole = new Role();
+		adminRole.setAuthority(Role.USERS_ADMIN);
+		Set<Role> roles = new HashSet<Role>();
+
+		roles.add(adminRole);
+		User savedUser = usersService.createUser("Aniwat","1234",address,roles);
 		ArrayList<Whisky> whiskyList = new ArrayList<Whisky>();
 
 		UsersBasket usersBasket = new UsersBasket();

@@ -1,17 +1,15 @@
 package com.example.demo.users.objects;
 
 import com.example.demo.shipment.Address;
-import lombok.Data;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class User implements UserDetails {
+public class User implements UserDetails , Serializable {
 
 	@OneToOne(optional = false,cascade= CascadeType.ALL)
 	private Address address;
@@ -22,7 +20,16 @@ public class User implements UserDetails {
 		this.password = password;
 	}
 
+	@OneToMany(cascade= CascadeType.PERSIST,fetch = FetchType.EAGER)
+	@JoinTable(
+			name = "users_roles",
+			joinColumns = @JoinColumn(
+					name = "user_id", referencedColumnName = "id"),
+			inverseJoinColumns = @JoinColumn(
+					name = "role_id", referencedColumnName = "id"))
+	private Set<Role> authorities = new HashSet<>();
 	private String password;
+
 
 	public User(Address address, String username) {
 		this.address = address;
@@ -64,9 +71,12 @@ public class User implements UserDetails {
 
 	@Override
 	public Set<Role> getAuthorities() {
-		return null;
+		return this.authorities;
 	}
 
+	public void setAuthorities(Set<Role> authorities) {
+		this.authorities = authorities;
+	}
 
 	@Override
 	public String getPassword() {
