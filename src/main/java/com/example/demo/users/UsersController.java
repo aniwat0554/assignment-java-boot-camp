@@ -1,5 +1,6 @@
 package com.example.demo.users;
 
+import com.example.demo.users.objects.Role;
 import com.example.demo.users.objects.User;
 import com.example.demo.users.objects.UserListResponse;
 import com.example.demo.users.objects.UserResponse;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
 @RestController
@@ -30,6 +32,7 @@ public class UsersController {
 
     //This method exist for the purpose of confirming correctness of data modeling with JPA
     @GetMapping("/users")
+    @RolesAllowed("USERS_ADMIN")
     public UserListResponse getUsers(){
         List<User> users = usersService.getAllUsers();
         UserListResponse userListResponse = new UserListResponse();
